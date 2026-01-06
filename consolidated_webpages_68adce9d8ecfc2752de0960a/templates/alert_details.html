@@ -1,0 +1,1023 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   CrowShield AI — Alert Details
+  </title>
+  <!-- Brand Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <!-- Bootstrap 5 CSS -->
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" rel="stylesheet"/>
+  <!-- Font Awesome 6 -->
+  <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" referrerpolicy="no-referrer" rel="stylesheet">
+   <!-- Leaflet CSS -->
+   <link crossorigin="" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" rel="stylesheet">
+    <!-- Site Theme CSS -->
+    <link href="style.css" rel="stylesheet"/>
+    <!-- Page-specific CSS -->
+    <link href="alert_details.css" rel="stylesheet"/>
+   </link>
+  </link>
+ </head>
+ <body class="">
+  <!-- Header: First Responder Header (sticky top) -->
+  <header class="navbar navbar-expand bg-dark border-bottom border-secondary text-white sticky-top">
+   <div class="container-fluid">
+    <button aria-controls="csSidebar" aria-expanded="false" aria-label="Toggle sidebar" class="btn btn-outline-light me-2" data-bs-target="#csSidebar" data-bs-toggle="collapse" type="button">
+     <i class="fa-solid fa-bars">
+     </i>
+    </button>
+    <a class="navbar-brand d-flex align-items-center gap-2 text-white" href="./alert_details.html">
+     <img alt="CrowShield AI" onerror="this.onerror=null;this.src='https://picsum.photos/seed/crowshield/60/24';" src="https://data-smith.ai/wp-content/uploads/2025/01/logo_transparent_background.png" style="height:24px;"/>
+     <span class="fw-bold">
+      CrowShield AI — Responder
+     </span>
+    </a>
+    <div class="ms-auto d-flex align-items-center gap-2">
+     <a class="btn btn-outline-light" href="#map" id="btnCenterIncident">
+      <i class="fa-solid fa-location-crosshairs me-2">
+      </i>
+      Center on Incident
+     </a>
+     <button aria-label="Notifications" class="btn btn-link text-white position-relative" id="btnNotifications">
+      <i class="fa-solid fa-bell">
+      </i>
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="notifCount" style="display:none;">
+       0
+      </span>
+     </button>
+     <div class="dropdown">
+      <button aria-expanded="false" class="btn btn-outline-light dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+       <span class="badge bg-secondary text-dark me-2">
+        FR
+       </span>
+       Responder
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end">
+       <li>
+        <a class="dropdown-item" href="./login_page.html">
+         <i class="fa-solid fa-user me-2">
+         </i>
+         Logout
+        </a>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </div>
+  </header>
+  <div class="container-fluid p-0">
+   <div class="row g-0">
+    <!-- Sidebar: First Responder Sidebar -->
+    <style>
+     .cs-sidebar{min-height:100vh;width:240px;background:#000;color:#fff}
+        .cs-sidebar .nav-link{color:#fff;border-radius:.5rem}
+        .cs-sidebar .nav-link:hover{background:#111;color:#fff}
+        .cs-avatar{width:36px;height:36px}
+    </style>
+    <aside class="collapse d-lg-flex flex-column cs-sidebar" id="csSidebar">
+     <div class="p-3 d-flex align-items-center border-bottom border-secondary">
+      <img alt="CrowShield" class="me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/crowshield/48/24';" src="https://data-smith.ai/wp-content/uploads/2025/01/logo_transparent_background.png" style="height:24px"/>
+      <span class="fw-bold">
+       CrowShield AI
+      </span>
+     </div>
+     <div class="px-3 py-3 border-bottom border-secondary">
+      <div class="d-flex align-items-center">
+       <div class="rounded-circle bg-secondary text-dark d-flex align-items-center justify-content-center me-2 cs-avatar">
+        FR
+       </div>
+       <div>
+        <div class="fw-semibold">
+         First Responder
+        </div>
+        <div class="small text-muted">
+         Responder
+        </div>
+       </div>
+      </div>
+     </div>
+     <nav class="nav flex-column px-2 py-2">
+      <a class="nav-link" href="./alert_details.html">
+       <i class="fa-solid fa-location-crosshairs me-2">
+       </i>
+       Current Incident
+      </a>
+      <a class="nav-link" href="./main_dashboard.html">
+       <i class="fa-solid fa-clipboard-list me-2">
+       </i>
+       All Incidents
+      </a>
+      <a class="nav-link" href="#">
+       <i class="fa-solid fa-circle-question me-2">
+       </i>
+       Help
+      </a>
+     </nav>
+     <div class="mt-auto p-3">
+      <div class="text-white-50 small">
+       Stay Safe • Coordinate via Command
+      </div>
+     </div>
+    </aside>
+    <!-- Main Content -->
+    <main class="col">
+     <div class="main-panel">
+      <!-- Breadcrumb -->
+      <nav aria-label="breadcrumb" class="breadcrumb mb-3">
+       <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item">
+         <a href="./main_dashboard.html">
+          All Incidents
+         </a>
+        </li>
+        <li aria-current="page" class="breadcrumb-item active" id="bcAlertId">
+         Alert
+        </li>
+       </ol>
+      </nav>
+      <!-- Alert Details Header -->
+      <section aria-labelledby="alertHeaderTitle" class="card mb-4">
+       <div class="card-header">
+        <div class="d-flex align-items-center justify-content-between w-100 flex-wrap gap-2">
+         <div class="d-flex align-items-center gap-3">
+          <div>
+           <h1 class="page-title mb-0" id="alertHeaderTitle">
+            Critical Density Breach
+           </h1>
+           <div class="small text-muted" id="alertMeta">
+            ID: ALR-2025-000347 • Triggered: 2025-08-26 14:38 UTC
+           </div>
+          </div>
+         </div>
+         <div class="d-flex align-items-center gap-2 flex-wrap">
+          <span class="badge rounded-pill bg-danger" id="severityBadge">
+           <i class="fa-solid fa-triangle-exclamation me-1">
+           </i>
+           High
+          </span>
+          <span class="badge rounded-pill bg-info text-dark" id="statusBadge">
+           <i class="fa-solid fa-circle-dot me-1">
+           </i>
+           New
+          </span>
+         </div>
+        </div>
+       </div>
+       <div class="card-body py-3">
+        <div class="d-flex flex-wrap gap-3">
+         <span class="badge-soft info">
+          Zone:
+          <strong class="ms-1" id="zoneNameChip">
+           Main Plaza East
+          </strong>
+         </span>
+         <span class="badge-soft warning">
+          Threshold:
+          <strong class="ms-1" id="thresholdChip">
+           150
+          </strong>
+          ppl
+         </span>
+         <span class="badge-soft primary">
+          Assigned:
+          <strong class="ms-1">
+           FR-2291
+          </strong>
+         </span>
+        </div>
+       </div>
+      </section>
+      <!-- Incident Analysis View: Map + Live Stats -->
+      <section class="row g-3 mb-4" id="incidentAnalysis">
+       <!-- Map Panel -->
+       <div class="col-12 col-lg-7">
+        <div class="card h-100">
+         <div class="card-header">
+          <div class="widget-title">
+           Incident Map
+          </div>
+          <div class="d-flex align-items-center gap-2">
+           <button class="btn btn-light btn-sm" id="btnFitZone">
+            <i class="fa-solid fa-maximize me-1">
+            </i>
+            Fit to Zone
+           </button>
+          </div>
+         </div>
+         <div class="card-body p-0">
+          <div aria-label="Incident Map" id="incidentMap">
+          </div>
+         </div>
+        </div>
+       </div>
+       <!-- Live Stats Panel -->
+       <div class="col-12 col-lg-5">
+        <div class="card h-100">
+         <div class="card-header">
+          <div class="widget-title">
+           Zone Live Stats
+          </div>
+          <span class="badge rounded-pill bg-success" id="liveIndicator">
+           <i class="fa-solid fa-signal me-1">
+           </i>
+           Live
+          </span>
+         </div>
+         <div class="card-body">
+          <div class="row g-3 align-items-stretch">
+           <div class="col-12 col-sm-6">
+            <div class="metric-card h-100">
+             <div class="metric-title">
+              Current Count
+             </div>
+             <div class="metric-value" id="currentCount">
+              220
+             </div>
+             <div class="small text-muted">
+              people in zone
+             </div>
+            </div>
+           </div>
+           <div class="col-12 col-sm-6">
+            <div class="metric-card h-100">
+             <div class="metric-title">
+              Density Threshold
+             </div>
+             <div class="metric-value" id="densityThreshold">
+              150
+             </div>
+             <div class="small text-muted">
+              configured
+             </div>
+            </div>
+           </div>
+           <div class="col-12">
+            <div class="mb-2 d-flex align-items-center justify-content-between">
+             <span class="text-muted">
+              Utilization
+             </span>
+             <span class="text-muted" id="utilPercent">
+              146%
+             </span>
+            </div>
+            <div class="progress">
+             <div class="progress-bar" id="utilBar" role="progressbar" style="width: 100%">
+             </div>
+            </div>
+           </div>
+           <div class="col-12">
+            <div class="card bg-surface">
+             <div class="card-header py-2">
+              <div class="small text-muted">
+               Last 60s Crowd Count
+              </div>
+             </div>
+             <div class="card-body">
+              <canvas height="140" id="countChart">
+              </canvas>
+             </div>
+            </div>
+           </div>
+           <div class="col-12">
+            <div class="card bg-surface video-card">
+             <div class="card-header py-2 d-flex align-items-center justify-content-between">
+              <div class="small text-muted">
+               Live Camera Feed
+              </div>
+              <span class="badge rounded-pill bg-secondary text-dark">
+               Cam-12
+              </span>
+             </div>
+             <div class="card-body">
+              <div class="ratio ratio-16x9">
+               <video autoplay="" controls="" id="liveVideo" muted="" playsinline="" poster="https://picsum.photos/seed/plaza/800/450">
+                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4"/>
+                Your browser does not support the video tag.
+               </video>
+              </div>
+             </div>
+            </div>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </section>
+      <!-- Alert Management Panel: Tabs -->
+      <section class="card" id="alertManagement">
+       <div class="card-header">
+        <ul class="nav nav-tabs card-header-tabs" id="manageTabs" role="tablist">
+         <li class="nav-item" role="presentation">
+          <button aria-controls="actions" aria-selected="true" class="nav-link active" data-bs-target="#actions" data-bs-toggle="tab" id="actions-tab" role="tab" type="button">
+           <i class="fa-solid fa-sliders me-1">
+           </i>
+           Actions
+          </button>
+         </li>
+         <li class="nav-item" role="presentation">
+          <button aria-controls="log" aria-selected="false" class="nav-link" data-bs-target="#log" data-bs-toggle="tab" id="log-tab" role="tab" type="button">
+           <i class="fa-solid fa-clock-rotate-left me-1">
+           </i>
+           Incident Log
+          </button>
+         </li>
+        </ul>
+       </div>
+       <div class="card-body">
+        <div class="tab-content" id="manageTabsContent">
+         <!-- Actions Pane -->
+         <div aria-labelledby="actions-tab" class="tab-pane fade show active" id="actions" role="tabpanel">
+          <div class="row g-3">
+           <div class="col-12 col-lg-8">
+            <div class="alert alert-warning d-flex align-items-center" role="alert">
+             <i class="fa-solid fa-circle-info me-2">
+             </i>
+             Use Acknowledge to claim the alert, then Resolve when the situation is safe.
+            </div>
+            <div class="d-flex flex-wrap gap-2">
+             <button class="btn btn-primary" id="btnAcknowledge">
+              <span aria-hidden="true" class="spinner-border spinner-border-sm me-2 d-none" id="ackSpinner">
+              </span>
+              <i class="fa-solid fa-hand">
+              </i>
+              <span class="ms-2">
+               Acknowledge
+              </span>
+             </button>
+             <button class="btn btn-success" disabled="" id="btnResolve">
+              <i class="fa-solid fa-check-double">
+              </i>
+              <span class="ms-2">
+               Resolve
+              </span>
+             </button>
+             <button class="btn btn-light" id="btnCenter2">
+              <i class="fa-solid fa-location-crosshairs me-2">
+              </i>
+              Center on Incident
+             </button>
+            </div>
+            <div class="mt-3 small text-muted">
+             Current Status:
+             <span class="fw-semibold" id="statusText">
+              New
+             </span>
+             • Role:
+             <span class="fw-semibold">
+              First Responder
+             </span>
+            </div>
+           </div>
+           <div class="col-12 col-lg-4">
+            <div class="card bg-surface h-100">
+             <div class="card-header py-2">
+              <div class="small text-muted">
+               Quick Info
+              </div>
+             </div>
+             <div class="card-body">
+              <ul class="list-unstyled mb-0 small">
+               <li class="mb-2">
+                <span class="text-muted">
+                 Zone:
+                </span>
+                <strong id="qiZone">
+                 Main Plaza East
+                </strong>
+               </li>
+               <li class="mb-2">
+                <span class="text-muted">
+                 Threshold:
+                </span>
+                <strong id="qiThreshold">
+                 150
+                </strong>
+               </li>
+               <li class="mb-2">
+                <span class="text-muted">
+                 Severity:
+                </span>
+                <strong id="qiSeverity">
+                 High
+                </strong>
+               </li>
+               <li>
+                <span class="text-muted">
+                 Alert ID:
+                </span>
+                <strong id="qiAlertId">
+                 ALR-2025-000347
+                </strong>
+               </li>
+              </ul>
+             </div>
+            </div>
+           </div>
+          </div>
+         </div>
+         <!-- Incident Log Pane -->
+         <div aria-labelledby="log-tab" class="tab-pane fade" id="log" role="tabpanel">
+          <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+           <div class="input-group" style="max-width:360px;">
+            <span class="input-group-text">
+             <i class="fa-solid fa-magnifying-glass">
+             </i>
+            </span>
+            <input class="form-control" id="logSearch" placeholder="Search notes, user, action..." type="text"/>
+           </div>
+           <div class="ms-auto d-flex gap-2">
+            <select class="form-select form-select-sm" id="logSort" style="width:auto;">
+             <option value="desc">
+              Newest first
+             </option>
+             <option value="asc">
+              Oldest first
+             </option>
+            </select>
+           </div>
+          </div>
+          <div class="table-responsive">
+           <table class="table table-theme align-middle" id="logTable">
+            <thead>
+             <tr>
+              <th scope="col">
+               Timestamp
+              </th>
+              <th scope="col">
+               User
+              </th>
+              <th scope="col">
+               Action
+              </th>
+              <th scope="col">
+               Notes
+              </th>
+             </tr>
+            </thead>
+            <tbody id="logTbody">
+             <!-- Rows injected by JS -->
+            </tbody>
+           </table>
+          </div>
+          <div class="d-flex align-items-center justify-content-between mt-2">
+           <div class="small text-muted" id="paginationInfo">
+            Showing 1–6 of 6
+           </div>
+           <div aria-label="Log pagination" class="btn-group btn-group-sm" role="group">
+            <button class="btn btn-light" id="prevPage">
+             <i class="fa-solid fa-chevron-left">
+             </i>
+            </button>
+            <button class="btn btn-light" id="nextPage">
+             <i class="fa-solid fa-chevron-right">
+             </i>
+            </button>
+           </div>
+          </div>
+          <hr/>
+          <form autocomplete="off" class="d-flex gap-2 align-items-start mt-3" id="addNoteForm">
+           <div class="flex-grow-1">
+            <label class="form-label" for="noteText">
+             Add Note
+            </label>
+            <textarea class="form-control" id="noteText" placeholder="Type an update or instruction..." rows="2"></textarea>
+            <div class="form-text">
+             Notes will be logged with your user ID and timestamp.
+            </div>
+           </div>
+           <div class="pt-4">
+            <button class="btn btn-primary" type="submit">
+             <i class="fa-solid fa-plus me-2">
+             </i>
+             Add
+            </button>
+           </div>
+          </form>
+         </div>
+        </div>
+       </div>
+      </section>
+      <!-- Toast Container -->
+      <div class="position-fixed top-0 end-0 p-3" style="z-index: 1080">
+       <div aria-atomic="true" aria-live="polite" class="toast align-items-center text-bg-dark border-0" id="liveToast" role="status">
+        <div class="d-flex">
+         <div class="toast-body">
+          <i class="fa-solid fa-wifi me-2">
+          </i>
+          Live feed connected for Zone
+          <span id="toastZone">
+           Main Plaza East
+          </span>
+          .
+         </div>
+         <button aria-label="Close" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" type="button">
+         </button>
+        </div>
+       </div>
+      </div>
+     </div>
+    </main>
+   </div>
+  </div>
+  <!-- Footer: First Responder Footer -->
+  <footer class="bg-dark border-top border-secondary text-white-50 small py-2">
+   <div class="container-fluid d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center gap-2">
+     <img alt="CrowShield AI" onerror="this.onerror=null;this.src='https://picsum.photos/seed/crowshield/36/18';" src="https://data-smith.ai/wp-content/uploads/2025/01/logo_transparent_background.png" style="height:18px;"/>
+     <span>
+      CrowShield AI Responder
+     </span>
+    </div>
+    <div class="d-none d-md-flex gap-3">
+     <a class="link-light text-decoration-none" href="./alert_details.html#map">
+      <i class="fa-solid fa-location-crosshairs me-1">
+      </i>
+      Center
+     </a>
+     <a class="link-light text-decoration-none" href="./main_dashboard.html#alerts">
+      <i class="fa-solid fa-check me-1">
+      </i>
+      Acknowledge
+     </a>
+    </div>
+    <div class="d-flex gap-3">
+     <a class="link-light text-decoration-none" href="#">
+      Terms
+     </a>
+     <a class="link-light text-decoration-none" href="#">
+      Privacy
+     </a>
+    </div>
+   </div>
+  </footer>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+  </script>
+  <!-- Bootstrap 5 JS Bundle -->
+  <script crossorigin="anonymous" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <!-- Leaflet JS -->
+  <script crossorigin="" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+  </script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js">
+  </script>
+  <script>
+   // --- Mocked initial data (could be replaced by API calls) ---
+const params = new URLSearchParams(window.location.search);
+const alertData = {
+    alertId: params.get('id') || 'ALR-2025-000347',
+    alertType: 'Critical Density Breach',
+    severity: params.get('sev') || 'High', // High | Medium | Low
+    status: params.get('status') || 'New', // New | Acknowledged | Resolved
+    timestamp: '2025-08-26 14:38 UTC',
+    zone: {
+        id: 'Z-17',
+        name: 'Main Plaza East',
+        threshold: 150,
+        coordinates: [
+            [37.7758, -122.4206],
+            [37.7764, -122.4189],
+            [37.7752, -122.4178],
+            [37.7743, -122.4192]
+        ]
+    }
+};
+let userRole = 'First Responder';
+let currentStatus = alertData.status;
+
+// --- DOM references ---
+const bcAlertId = document.getElementById('bcAlertId');
+const alertMeta = document.getElementById('alertMeta');
+const severityBadge = document.getElementById('severityBadge');
+const statusBadge = document.getElementById('statusBadge');
+const statusText = document.getElementById('statusText');
+const currentCountEl = document.getElementById('currentCount');
+const thresholdEl = document.getElementById('densityThreshold');
+const utilPercentEl = document.getElementById('utilPercent');
+const utilBarEl = document.getElementById('utilBar');
+const zoneNameChip = document.getElementById('zoneNameChip');
+const thresholdChip = document.getElementById('thresholdChip');
+const qiZone = document.getElementById('qiZone');
+const qiThreshold = document.getElementById('qiThreshold');
+const qiSeverity = document.getElementById('qiSeverity');
+const qiAlertId = document.getElementById('qiAlertId');
+const toastZone = document.getElementById('toastZone');
+const notifCount = document.getElementById('notifCount');
+
+// --- Apply initial data ---
+document.getElementById('alertHeaderTitle').textContent = alertData.alertType;
+alertMeta.textContent = `ID: ${alertData.alertId} • Triggered: ${alertData.timestamp}`;
+bcAlertId.textContent = alertData.alertId;
+zoneNameChip.textContent = alertData.zone.name;
+qiZone.textContent = alertData.zone.name;
+thresholdEl.textContent = String(alertData.zone.threshold);
+thresholdChip.textContent = String(alertData.zone.threshold);
+qiThreshold.textContent = String(alertData.zone.threshold);
+qiSeverity.textContent = alertData.severity;
+qiAlertId.textContent = alertData.alertId;
+toastZone.textContent = alertData.zone.name;
+
+// --- Severity & Status badge coloring ---
+function setSeverityBadge(sev) {
+    severityBadge.className = 'badge rounded-pill';
+    severityBadge.innerHTML = '';
+    let icon = 'fa-triangle-exclamation';
+    switch (sev) {
+        case 'High':
+            severityBadge.classList.add('bg-danger');
+            severityBadge.innerHTML = `<i class="fa-solid ${icon} me-1"></i>High`;
+            break;
+        case 'Medium':
+            severityBadge.classList.add('bg-warning', 'text-dark');
+            severityBadge.innerHTML = `<i class="fa-solid ${icon} me-1"></i>Medium`;
+            break;
+        default:
+            severityBadge.classList.add('bg-success');
+            severityBadge.innerHTML = `<i class="fa-solid ${icon} me-1"></i>Low`;
+    }
+}
+
+function setStatusBadge(st) {
+    statusBadge.className = 'badge rounded-pill';
+    statusBadge.innerHTML = '';
+    let icon = 'fa-circle-dot';
+    if (st === 'New') {
+        statusBadge.classList.add('bg-info', 'text-dark');
+    } else if (st === 'Acknowledged') {
+        statusBadge.classList.add('bg-warning', 'text-dark');
+    } else if (st === 'Resolved') {
+        statusBadge.classList.add('bg-success');
+    } else {
+        statusBadge.classList.add('bg-secondary');
+    }
+    statusBadge.innerHTML = `<i class="fa-solid ${icon} me-1"></i>${st}`;
+    statusText.textContent = st;
+}
+setSeverityBadge(alertData.severity);
+setStatusBadge(currentStatus);
+
+// --- Leaflet map ---
+const map = L.map('incidentMap');
+const tiles = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+    attribution: '&copy; OpenStreetMap'
+}).addTo(map);
+
+function cssVar(name, fallback) {
+    const v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+    return v || fallback;
+}
+const sevColor = alertData.severity === 'High' ? cssVar('--color-error', '#CD2026') :
+    alertData.severity === 'Medium' ? cssVar('--color-warning', '#FFA500') :
+    cssVar('--color-success', '#00774E');
+
+const zonePolygon = L.polygon(alertData.zone.coordinates, {
+    color: sevColor,
+    weight: 3,
+    fillColor: sevColor,
+    fillOpacity: 0.15
+}).addTo(map).bindPopup(`<strong>${alertData.zone.name}</strong><br/>Severity: ${alertData.severity}`);
+
+function fitToZone() {
+    map.fitBounds(zonePolygon.getBounds(), {
+        padding: [20, 20]
+    });
+}
+tiles.on('load', () => fitToZone());
+document.getElementById('btnFitZone').addEventListener('click', fitToZone);
+
+// Center actions from header/buttons
+document.getElementById('btnCenterIncident').addEventListener('click', (e) => {
+    e.preventDefault();
+    fitToZone();
+});
+document.getElementById('btnCenter2').addEventListener('click', () => fitToZone());
+
+// --- Live stats mock updates & chart ---
+let currentCount = 220;
+const threshold = alertData.zone.threshold;
+
+function renderUtilization() {
+    const pct = Math.round((currentCount / threshold) * 100);
+    utilPercentEl.textContent = `${pct}%`;
+    utilBarEl.style.width = `${Math.min(pct, 100)}%`;
+    utilBarEl.classList.remove('bg-success', 'bg-warning', 'bg-danger');
+    if (pct >= 120) utilBarEl.classList.add('bg-danger');
+    else if (pct >= 90) utilBarEl.classList.add('bg-warning');
+    else utilBarEl.classList.add('bg-success');
+    const card = currentCountEl.closest('.metric-card');
+    card.classList.remove('alarm');
+    if (currentCount > threshold) card.classList.add('alarm');
+}
+currentCountEl.textContent = String(currentCount);
+renderUtilization();
+
+// Chart
+const ctx = document.getElementById('countChart');
+const labels = Array.from({
+    length: 30
+}, (_, i) => `${(30-i)*2}s`);
+const dataPoints = Array.from({
+    length: 30
+}, () => Math.max(80, Math.min(260, Math.round(currentCount + (Math.random() * 40 - 20)))));
+const chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+        labels,
+        datasets: [{
+            label: 'Count',
+            data: dataPoints,
+            borderColor: sevColor,
+            backgroundColor: sevColor + '33',
+            fill: true,
+            tension: 0.25,
+            pointRadius: 0
+        }]
+    },
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false
+            },
+            tooltip: {
+                mode: 'nearest',
+                intersect: false
+            }
+        },
+        scales: {
+            x: {
+                ticks: {
+                    maxTicksLimit: 6
+                }
+            },
+            y: {
+                beginAtZero: true,
+                grace: '10%'
+            }
+        }
+    }
+});
+
+setInterval(() => {
+    // Random walk
+    const delta = Math.round((Math.random() - 0.45) * 12);
+    currentCount = Math.max(50, currentCount + delta);
+    currentCountEl.textContent = String(currentCount);
+    chart.data.datasets[0].data.shift();
+    chart.data.datasets[0].data.push(currentCount);
+    chart.update('none');
+    renderUtilization();
+}, 2000);
+
+// --- Toast on load ---
+const toastEl = document.getElementById('liveToast');
+const liveToast = new bootstrap.Toast(toastEl, {
+    delay: 3000
+});
+setTimeout(() => liveToast.show(), 800);
+
+// --- Notifications mock ---
+let notif = 0;
+setInterval(() => {
+    if (currentStatus !== 'Resolved' && Math.random() < 0.18) {
+        notif += 1;
+        notifCount.textContent = String(notif);
+        notifCount.style.display = '';
+    }
+}, 6000);
+document.getElementById('btnNotifications').addEventListener('click', () => {
+    notif = 0;
+    notifCount.style.display = 'none';
+    Swal.fire({
+        icon: 'info',
+        title: 'Notifications',
+        text: 'No unread notifications.'
+    });
+});
+
+// --- Incident Log ---
+const log = [{
+    ts: '2025-08-26 14:38:02',
+    user: 'System',
+    action: 'Alert Created',
+    notes: 'Density exceeded threshold (150) with count 218.'
+}, {
+    ts: '2025-08-26 14:38:10',
+    user: 'Cam-12',
+    action: 'Auto Snapshot',
+    notes: 'Frame captured for verification.'
+}, {
+    ts: '2025-08-26 14:39:02',
+    user: 'FR-2190',
+    action: 'Update',
+    notes: 'En route to Main Plaza East.'
+}, {
+    ts: '2025-08-26 14:40:31',
+    user: 'System',
+    action: 'Live Feed',
+    notes: 'Connection stabilized at 24 fps.'
+}, {
+    ts: '2025-08-26 14:41:00',
+    user: 'Ops-Coord',
+    action: 'Instruction',
+    notes: 'Set up soft barriers at east and west entries.'
+}, {
+    ts: '2025-08-26 14:42:15',
+    user: 'FR-2291',
+    action: 'Observation',
+    notes: 'Crowd dispersing slowly after PA announcement.'
+}];
+let page = 1;
+const pageSize = 6;
+
+const logTbody = document.getElementById('logTbody');
+const logSearch = document.getElementById('logSearch');
+const logSort = document.getElementById('logSort');
+const paginationInfo = document.getElementById('paginationInfo');
+const prevPage = document.getElementById('prevPage');
+const nextPage = document.getElementById('nextPage');
+
+function getFilteredSorted() {
+    const q = logSearch.value.toLowerCase().trim();
+    let arr = log.filter(r => !q || (r.ts + " " + r.user + " " + r.action + " " + r.notes).toLowerCase().includes(q));
+    arr.sort((a, b) => (logSort.value === 'asc' ? a.ts.localeCompare(b.ts) : b.ts.localeCompare(a.ts)));
+    return arr;
+}
+
+function renderLog() {
+    const rows = getFilteredSorted();
+    const total = rows.length;
+    const totalPages = Math.max(1, Math.ceil(total / pageSize));
+    page = Math.min(page, totalPages);
+    const start = (page - 1) * pageSize;
+    const pageRows = rows.slice(start, start + pageSize);
+    logTbody.innerHTML = pageRows.map(r => (
+        `<tr><td><span class="text-muted">${r.ts}</span></td><td>${r.user}</td><td>${r.action}</td><td>${r.notes}</td></tr>`
+    )).join('') || `<tr><td colspan="4" class="text-center text-muted">No entries</td></tr>`;
+    const shownFrom = total ? (start + 1) : 0;
+    const shownTo = Math.min(total, start + pageSize);
+    paginationInfo.textContent = `Showing ${shownFrom}–${shownTo} of ${total}`;
+    prevPage.disabled = page <= 1;
+    nextPage.disabled = page >= totalPages;
+}
+logSearch.addEventListener('input', () => {
+    page = 1;
+    renderLog();
+});
+logSort.addEventListener('change', () => {
+    page = 1;
+    renderLog();
+});
+prevPage.addEventListener('click', () => {
+    if (page > 1) {
+        page--;
+        renderLog();
+    }
+});
+nextPage.addEventListener('click', () => {
+    page++;
+    renderLog();
+});
+renderLog();
+
+// Add Note
+const addNoteForm = document.getElementById('addNoteForm');
+const noteText = document.getElementById('noteText');
+addNoteForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    const txt = noteText.value.trim();
+    if (!txt) return;
+    const now = new Date();
+    const ts = now.toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
+    log.unshift({
+        ts,
+        user: 'FR-2291',
+        action: 'Note',
+        notes: txt
+    });
+    noteText.value = '';
+    page = 1;
+    renderLog();
+});
+
+// --- Actions: Acknowledge & Resolve ---
+const btnAck = document.getElementById('btnAcknowledge');
+const btnResolve = document.getElementById('btnResolve');
+const ackSpinner = document.getElementById('ackSpinner');
+
+function updateButtonsState() {
+    if (userRole === 'Event Coordinator') {
+        btnAck.disabled = true;
+        btnResolve.disabled = true;
+        return;
+    }
+    if (currentStatus === 'New') {
+        btnAck.disabled = false;
+        btnResolve.disabled = true;
+    } else if (currentStatus === 'Acknowledged') {
+        btnAck.disabled = true;
+        btnResolve.disabled = false;
+    } else if (currentStatus === 'Resolved') {
+        btnAck.disabled = true;
+        btnResolve.disabled = true;
+    }
+}
+updateButtonsState();
+
+btnAck.addEventListener('click', async () => {
+    const res = await Swal.fire({
+        icon: 'question',
+        title: 'Acknowledge alert?',
+        text: `You will be assigned to ${alertData.alertId}.`,
+        showCancelButton: true,
+        confirmButtonText: 'Yes, acknowledge'
+    });
+    if (!res.isConfirmed) return;
+    btnAck.disabled = true;
+    ackSpinner.classList.remove('d-none');
+    // Simulate API
+    setTimeout(() => {
+        ackSpinner.classList.add('d-none');
+        currentStatus = 'Acknowledged';
+        setStatusBadge(currentStatus);
+        updateButtonsState();
+        const now = new Date();
+        const ts = now.toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
+        log.unshift({
+            ts,
+            user: 'FR-2291',
+            action: 'Acknowledged',
+            notes: 'Responder accepted the alert.'
+        });
+        renderLog();
+        Swal.fire({
+            icon: 'success',
+            title: 'Alert acknowledged',
+            timer: 1400,
+            showConfirmButton: false
+        });
+    }, 1000);
+});
+
+btnResolve.addEventListener('click', async () => {
+    const {
+        value: notes,
+        isConfirmed
+    } = await Swal.fire({
+        title: 'Resolve Alert',
+        input: 'textarea',
+        inputLabel: 'Resolution Notes',
+        inputPlaceholder: 'Describe the resolution...',
+        inputAttributes: {
+            'aria-label': 'Resolution notes'
+        },
+        showCancelButton: true
+    });
+    if (!isConfirmed) return;
+    if (!notes || !notes.trim()) {
+        return Swal.fire({
+            icon: 'warning',
+            title: 'Notes required',
+            text: 'Please add brief resolution notes.'
+        });
+    }
+    Swal.showLoading();
+    // Simulate API
+    setTimeout(() => {
+        Swal.close();
+        currentStatus = 'Resolved';
+        setStatusBadge(currentStatus);
+        updateButtonsState();
+        const now = new Date();
+        const ts = now.toISOString().replace('T', ' ').slice(0, 19) + ' UTC';
+        log.unshift({
+            ts,
+            user: 'FR-2291',
+            action: 'Resolved',
+            notes
+        });
+        renderLog();
+        Swal.fire({
+            icon: 'success',
+            title: 'Alert Resolved',
+            text: 'The incident has been marked as resolved.'
+        });
+    }, 1000);
+});
+
+// --- Video error fallback ---
+const liveVideo = document.getElementById('liveVideo');
+liveVideo.addEventListener('error', () => {
+    // Replace with an image placeholder if stream fails
+    const parent = liveVideo.parentElement;
+    parent.innerHTML = '<img src="https://picsum.photos/seed/live/800/450" alt="Live feed placeholder">';
+});
+  </script>
+ </body>
+</html>

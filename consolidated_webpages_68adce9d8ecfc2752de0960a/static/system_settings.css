@@ -1,0 +1,76 @@
+/* Page: system_settings.css */
+/* Use Poppins brand font */
+body {
+    font-family: "Poppins", var(--font-sans)
+    }
+/* Sidebar styles (from provided component spec) */
+.cs-sidebar {
+    min-height: 100vh;
+    width: 280px;
+    background: #000;
+    color: #fff
+    }
+.cs-sidebar .nav-link {
+    color: #fff;
+    border-radius: 0.5rem
+    }
+.cs-sidebar .nav-link:hover {
+    background: #111;
+    color: #fff
+    }
+.cs-sidebar .nav-link.active {
+    background: #222;
+    border: 1px solid #333
+    }
+.cs-submenu .nav-link {
+    padding-left: 2rem;
+    font-size: 0.95rem
+    }
+.cs-avatar {
+    width: 36px;
+    height: 36px
+    }
+/* Ensure main content doesn't get hidden behind the sidebar on large screens */
+@media (min-width: 992px) {
+    main.flex-grow-1 {
+        min-width: 0
+        }
+    }
+/* Settings vertical nav styling */
+.settings-nav .nav-link {
+    padding: 12px 16px;
+    border-radius: 0;
+    border-left: 3px solid transparent
+    }
+.settings-nav .nav-link:hover {
+    background: var(--neutral-soft)
+    }
+.settings-nav .nav-link.active {
+    background: var(--surface-muted);
+    border-left-color: var(--color-primary);
+    color: var(--text-strong)
+    }
+/* Connection status dot sizing consistency with theme */
+#connDot {
+    width: 12px;
+    height: 12px
+    }
+/* Sortable header active indicator (simple visual cue on hover) */
+#logTable thead th.sortable:hover {
+    color: var(--color-info)
+    }
+/* Chart card canvas fit */
+#apiChart {
+    width: 100%
+    }
+/* Minor spacing tweaks */
+.page-header {
+    margin-bottom: var(--space-4)
+    }
+.card-header .widget-title {
+    font-weight: 600
+    }
+/* Keep footer pinned visually when content is short */
+footer {
+    margin-top: auto
+    }

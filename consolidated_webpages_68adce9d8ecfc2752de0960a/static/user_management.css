@@ -1,0 +1,56 @@
+/* User Management Page Specific Styles (user_management.css) */
+/* Use Poppins on this page */
+body {
+    font-family: "Poppins", var(--font-sans)
+    }
+/* Ensure main content sits beside fixed-width sidebar */
+@media (min-width: 992px) {
+    #csSidebar {
+        position: sticky;
+        top: 0;
+        align-self: flex-start
+        }
+    }
+/* Action buttons and table spacing */
+#usersTable th, #usersTable td {
+    vertical-align: middle
+    }
+#usersTable th .fa-sort, #usersTable th .fa-sort-up, #usersTable th .fa-sort-down {
+    color: var(--text-muted);
+    margin-left: 6px
+    }
+/* Pagination */
+#pagination .page-link {
+    color: var(--text)
+    }
+#pagination .page-item.active .page-link {
+    background: var(--color-primary);
+    border-color: var(--color-primary);
+    color: var(--text-on-primary)
+    }
+/* Role badges alignment inside table */
+.badge {
+    font-weight: 600
+    }
+/* Chart canvas responsive height */
+#rolesChart {
+    max-height: 220px
+    }
+/* Feedback alert subtle shadow */
+#feedbackArea {
+    box-shadow: var(--shadow-1)
+    }
+/* View switcher alignment */
+.view-switcher .option {
+    cursor: pointer
+    }
+/* Modal spacing */
+#userFormModal .modal-body .form-label {
+    font-weight: 600
+    }
+/* Make sure the main content area uses full width when sidebar collapsed on mobile */
+@media (max-width: 991.98px) {
+    .cs-sidebar {
+        width: 100%
+        }
+    }

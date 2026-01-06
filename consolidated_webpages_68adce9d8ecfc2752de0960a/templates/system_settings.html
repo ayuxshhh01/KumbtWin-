@@ -1,0 +1,1246 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   CrowShield AI — System Settings
+  </title>
+  <!-- Google Font: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <!-- Bootstrap 5 CSS -->
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" rel="stylesheet"/>
+  <!-- Font Awesome 6 -->
+  <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkfGwZtDbLhzTQIg7aGQHS4G+m21aBrYySj1z9ZC1QwU5n0hZbM+9gGWQ==" referrerpolicy="no-referrer" rel="stylesheet">
+   <!-- Theme CSS -->
+   <link href="style.css" rel="stylesheet"/>
+   <!-- Page-specific CSS -->
+   <link href="system_settings.css" rel="stylesheet"/>
+  </link>
+ </head>
+ <body>
+  <div class="d-flex flex-column min-vh-100">
+   <!-- Header (Top Navbar) -->
+   <header class="navbar navbar-expand bg-dark border-bottom border-secondary text-white">
+    <div class="container-fluid">
+     <button aria-controls="csSidebar" aria-expanded="false" aria-label="Toggle sidebar" class="btn btn-outline-light d-lg-none me-2" data-bs-target="#csSidebar" data-bs-toggle="collapse" type="button">
+      <i class="fa-solid fa-bars">
+      </i>
+     </button>
+     <a class="navbar-brand d-flex align-items-center gap-2 text-white" href="./main_dashboard.html">
+      <img alt="CrowShield AI" onerror="this.onerror=null;this.src='https://picsum.photos/seed/crowshield/120/28'" src="https://data-smith.ai/wp-content/uploads/2025/01/logo_transparent_background.png" style="height:28px;"/>
+      <span class="fw-bold">
+       CrowShield AI — Admin
+      </span>
+     </a>
+     <form class="d-none d-md-flex ms-auto me-3" role="search" style="max-width:420px;">
+      <div class="input-group">
+       <span class="input-group-text bg-secondary text-dark border-0">
+        <i class="fa-solid fa-magnifying-glass">
+        </i>
+       </span>
+       <input aria-label="Search" class="form-control" placeholder="Search zones, alerts, users..." type="search"/>
+      </div>
+     </form>
+     <div class="d-flex align-items-center gap-2">
+      <a class="btn btn-danger d-none d-sm-inline-flex" href="#manualAlert">
+       <i class="fa-solid fa-bullhorn me-2">
+       </i>
+       Manual Alert
+      </a>
+      <button class="btn btn-link text-white position-relative">
+       <i class="fa-solid fa-bell">
+       </i>
+       <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+        3
+       </span>
+      </button>
+      <button class="btn btn-link text-white">
+       <i class="fa-solid fa-envelope">
+       </i>
+      </button>
+      <div class="dropdown">
+       <button aria-expanded="false" class="btn btn-outline-light dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+        <span class="badge bg-secondary text-dark me-2">
+         SA
+        </span>
+        Admin
+       </button>
+       <ul class="dropdown-menu dropdown-menu-end">
+        <li>
+         <a class="dropdown-item" href="./system_settings.html">
+          <i class="fa-solid fa-gear me-2">
+          </i>
+          Settings
+         </a>
+        </li>
+        <li>
+         <hr class="dropdown-divider"/>
+        </li>
+        <li>
+         <a class="dropdown-item" href="#">
+          <i class="fa-solid fa-user me-2">
+          </i>
+          Logout
+         </a>
+        </li>
+       </ul>
+      </div>
+     </div>
+    </div>
+   </header>
+   <div class="flex-grow-1 d-flex">
+    <!-- Sidebar (Left) -->
+    <aside class="collapse d-lg-flex flex-column cs-sidebar" id="csSidebar">
+     <div class="p-3 d-flex align-items-center border-bottom border-secondary">
+      <img alt="CrowShield" class="me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/crowshield/120/28'" src="https://data-smith.ai/wp-content/uploads/2025/01/logo_transparent_background.png" style="height:28px"/>
+      <span class="fw-bold">
+       CrowShield AI
+      </span>
+     </div>
+     <div class="px-3 py-3 border-bottom border-secondary">
+      <div class="d-flex align-items-center">
+       <div class="rounded-circle bg-secondary text-dark d-flex align-items-center justify-content-center me-2 cs-avatar">
+        SA
+       </div>
+       <div>
+        <div class="fw-semibold">
+         System Admin
+        </div>
+        <div class="small text-muted">
+         Admin
+        </div>
+       </div>
+      </div>
+     </div>
+     <nav class="nav flex-column px-2 py-2">
+      <a aria-controls="adminMonitoring" aria-expanded="true" class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#adminMonitoring" role="button">
+       <span>
+        <i class="fa-solid fa-chart-line me-2">
+        </i>
+        Monitoring
+       </span>
+       <i class="fa-solid fa-angle-down">
+       </i>
+      </a>
+      <div class="collapse show cs-submenu" id="adminMonitoring">
+       <a class="nav-link" href="./main_dashboard.html">
+        <i class="fa-solid fa-map-location-dot me-2">
+        </i>
+        Dashboard
+       </a>
+       <a class="nav-link" href="./main_dashboard.html#alerts">
+        <i class="fa-solid fa-bolt me-2">
+        </i>
+        Active Alerts
+       </a>
+      </div>
+      <a aria-controls="adminZones" aria-expanded="true" class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#adminZones" role="button">
+       <span>
+        <i class="fa-solid fa-triangle-exclamation me-2">
+        </i>
+        Zones
+       </span>
+       <i class="fa-solid fa-angle-down">
+       </i>
+      </a>
+      <div class="collapse show cs-submenu" id="adminZones">
+       <a class="nav-link" href="./zone_management.html">
+        <i class="fa-solid fa-triangle-exclamation me-2">
+        </i>
+        Manage Zones
+       </a>
+      </div>
+      <a aria-controls="adminAlerts" aria-expanded="false" class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#adminAlerts" role="button">
+       <span>
+        <i class="fa-solid fa-clipboard-list me-2">
+        </i>
+        Alerts
+       </span>
+       <i class="fa-solid fa-angle-down">
+       </i>
+      </a>
+      <div class="collapse cs-submenu" id="adminAlerts">
+       <a class="nav-link" href="./main_dashboard.html#alerts">
+        <i class="fa-solid fa-bolt me-2">
+        </i>
+        Active Alerts
+       </a>
+       <a class="nav-link" href="./alert_details.html">
+        <i class="fa-solid fa-clipboard-list me-2">
+        </i>
+        Alert Details
+       </a>
+      </div>
+      <a aria-controls="adminReports" aria-expanded="false" class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#adminReports" role="button">
+       <span>
+        <i class="fa-solid fa-fire me-2">
+        </i>
+        Reports &amp; Analytics
+       </span>
+       <i class="fa-solid fa-angle-down">
+       </i>
+      </a>
+      <div class="collapse cs-submenu" id="adminReports">
+       <a class="nav-link" href="./reports_page.html">
+        <i class="fa-solid fa-clipboard-list me-2">
+        </i>
+        Alert Log
+       </a>
+       <a class="nav-link" href="./reports_page.html#heatmap">
+        <i class="fa-solid fa-fire me-2">
+        </i>
+        Historical Heatmap
+       </a>
+      </div>
+      <a aria-controls="adminAdmin" aria-expanded="true" class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#adminAdmin" role="button">
+       <span>
+        <i class="fa-solid fa-users-gear me-2">
+        </i>
+        Administration
+       </span>
+       <i class="fa-solid fa-angle-down">
+       </i>
+      </a>
+      <div class="collapse show cs-submenu" id="adminAdmin">
+       <a class="nav-link" href="./user_management.html">
+        <i class="fa-solid fa-users-gear me-2">
+        </i>
+        User Management
+       </a>
+       <a class="nav-link active" href="./system_settings.html">
+        <i class="fa-solid fa-sliders me-2">
+        </i>
+        Global Settings
+       </a>
+       <a class="nav-link" href="./system_settings.html#api">
+        <i class="fa-solid fa-plug me-2">
+        </i>
+        API Integrations
+       </a>
+      </div>
+      <a class="nav-link" href="#">
+       <i class="fa-solid fa-circle-question me-2">
+       </i>
+       Help
+      </a>
+     </nav>
+     <div class="mt-auto p-3">
+      <a class="btn btn-danger w-100" href="#manualAlert">
+       <i class="fa-solid fa-bullhorn me-2">
+       </i>
+       Send Manual Alert
+      </a>
+     </div>
+    </aside>
+    <!-- Main Content -->
+    <main class="flex-grow-1">
+     <div class="container-fluid py-3 py-lg-4">
+      <!-- Page header -->
+      <div class="page-header">
+       <div>
+        <h1 class="page-title mb-1">
+         System Settings
+        </h1>
+        <div class="text-muted">
+         Configure API integrations, default alert behaviors, and data retention policies.
+        </div>
+       </div>
+       <div class="d-flex align-items-center gap-2">
+        <span class="badge-soft info">
+         <i class="fa-solid fa-circle-info me-1">
+         </i>
+         Configure System
+        </span>
+        <a class="btn btn-light d-none d-sm-inline-flex" href="#">
+         <i class="fa-solid fa-circle-question me-2">
+         </i>
+         Help
+        </a>
+       </div>
+      </div>
+      <!-- System feedback placeholder -->
+      <div class="alert alert-info d-none" id="systemFeedback" role="alert">
+       <i class="fa-solid fa-circle-info me-2">
+       </i>
+       Loading current settings...
+      </div>
+      <div class="row g-3 g-lg-4">
+       <!-- Vertical Settings Navigation -->
+       <div class="col-12 col-lg-3">
+        <div class="card h-100">
+         <div class="card-header">
+          <div class="title d-flex align-items-center gap-2">
+           <i class="fa-solid fa-sliders">
+           </i>
+           <span class="widget-title">
+            Settings Categories
+           </span>
+          </div>
+         </div>
+         <div class="card-body p-0">
+          <div aria-orientation="vertical" class="nav flex-column nav-pills settings-nav" id="settingsTab" role="tablist">
+           <button aria-controls="panel-api" aria-selected="true" class="nav-link text-start active" data-bs-target="#panel-api" data-bs-toggle="pill" id="tab-api" role="tab" type="button">
+            <i class="fa-solid fa-plug me-2">
+            </i>
+            API Integrations
+           </button>
+           <button aria-controls="panel-alerts" aria-selected="false" class="nav-link text-start" data-bs-target="#panel-alerts" data-bs-toggle="pill" id="tab-alerts" role="tab" type="button">
+            <i class="fa-solid fa-bell me-2">
+            </i>
+            Alert Settings
+           </button>
+           <button aria-controls="panel-data" aria-selected="false" class="nav-link text-start" data-bs-target="#panel-data" data-bs-toggle="pill" id="tab-data" role="tab" type="button">
+            <i class="fa-solid fa-database me-2">
+            </i>
+            Data Retention
+           </button>
+          </div>
+         </div>
+        </div>
+       </div>
+       <!-- Settings Content Panels -->
+       <div class="col-12 col-lg-9">
+        <div class="tab-content" id="settingsTabContent">
+         <!-- API Integrations Panel -->
+         <div aria-labelledby="tab-api" class="tab-pane fade show active" id="panel-api" role="tabpanel" tabindex="0">
+          <div class="card mb-3">
+           <div class="card-header">
+            <div class="d-flex align-items-center gap-2">
+             <i class="fa-solid fa-plug">
+             </i>
+             <span class="widget-title">
+              Twilio Integration
+             </span>
+             <span class="ms-2 badge bg-secondary" id="connStatusBadge">
+              Untested
+             </span>
+            </div>
+            <div class="d-flex align-items-center gap-2">
+             <button class="btn btn-info btn-sm" id="btnTestConnection">
+              <i class="fa-solid fa-vial me-1">
+              </i>
+              Test Connection
+             </button>
+             <button class="btn btn-primary btn-sm" disabled="" id="btnSaveApi">
+              <i class="fa-solid fa-floppy-disk me-1">
+              </i>
+              Save Changes
+             </button>
+            </div>
+           </div>
+           <div class="card-body">
+            <form id="formApi" novalidate="">
+             <div class="row g-3">
+              <div class="col-12 col-md-6">
+               <label class="form-label" for="twilioSid">
+                Twilio Account SID
+                <span class="text-danger">
+                 *
+                </span>
+               </label>
+               <input class="form-control" id="twilioSid" placeholder="ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx" required="" type="text"/>
+               <div class="form-text">
+                Your Twilio project SID.
+               </div>
+              </div>
+              <div class="col-12 col-md-6">
+               <label class="form-label" for="twilioToken">
+                Twilio Auth Token
+                <span class="text-danger">
+                 *
+                </span>
+               </label>
+               <div class="input-group">
+                <input class="form-control" id="twilioToken" placeholder="••••••••••••••••" required="" type="password"/>
+                <button class="btn btn-light" id="toggleToken" type="button">
+                 <i class="fa-regular fa-eye">
+                 </i>
+                </button>
+               </div>
+               <div class="form-text">
+                Stored securely. Click eye icon to toggle visibility.
+               </div>
+              </div>
+              <div class="col-12 col-md-6">
+               <label class="form-label" for="twilioPhone">
+                Twilio Phone Number
+                <span class="text-danger">
+                 *
+                </span>
+               </label>
+               <input class="form-control" id="twilioPhone" placeholder="+15551234567" required="" type="text"/>
+               <div class="form-text">
+                E.164 format (e.g., +15551234567)
+               </div>
+              </div>
+              <div class="col-12 col-md-6">
+               <label class="form-label">
+                Connection Status
+               </label>
+               <div class="d-flex align-items-center gap-2">
+                <span class="status-dot" id="connDot">
+                </span>
+                <span class="text-muted" id="connText">
+                 Not tested
+                </span>
+               </div>
+              </div>
+             </div>
+            </form>
+           </div>
+          </div>
+          <div class="row g-3">
+           <div class="col-12 col-xl-6">
+            <div class="card h-100">
+             <div class="card-header">
+              <div class="d-flex align-items-center gap-2">
+               <i class="fa-solid fa-chart-line">
+               </i>
+               <span class="widget-title">
+                API Success Rate (7 days)
+               </span>
+              </div>
+             </div>
+             <div class="card-body">
+              <canvas aria-label="API Success Rate Chart" height="180" id="apiChart" role="img">
+              </canvas>
+             </div>
+            </div>
+           </div>
+           <div class="col-12 col-xl-6">
+            <div class="card h-100">
+             <div class="card-header d-flex justify-content-between align-items-center">
+              <div class="d-flex align-items-center gap-2">
+               <i class="fa-solid fa-list">
+               </i>
+               <span class="widget-title">
+                Integration Activity Log
+               </span>
+              </div>
+              <div class="input-group input-group-sm" style="max-width: 240px;">
+               <span class="input-group-text bg-secondary text-dark border-0">
+                <i class="fa-solid fa-magnifying-glass">
+                </i>
+               </span>
+               <input class="form-control" id="logFilter" placeholder="Filter actions or status..." type="text"/>
+              </div>
+             </div>
+             <div class="card-body p-0">
+              <div class="table-responsive">
+               <table class="table table-theme mb-0" id="logTable">
+                <thead>
+                 <tr>
+                  <th class="sortable" data-sort="datetime">
+                   Date/Time
+                   <i class="fa-solid fa-sort ms-1">
+                   </i>
+                  </th>
+                  <th class="sortable" data-sort="endpoint">
+                   Endpoint
+                   <i class="fa-solid fa-sort ms-1">
+                   </i>
+                  </th>
+                  <th class="sortable" data-sort="action">
+                   Action
+                   <i class="fa-solid fa-sort ms-1">
+                   </i>
+                  </th>
+                  <th class="sortable" data-sort="status">
+                   Status
+                   <i class="fa-solid fa-sort ms-1">
+                   </i>
+                  </th>
+                  <th class="sortable" data-sort="duration">
+                   Duration (ms)
+                   <i class="fa-solid fa-sort ms-1">
+                   </i>
+                  </th>
+                  <th>
+                   Message
+                  </th>
+                 </tr>
+                </thead>
+                <tbody>
+                 <tr>
+                  <td data-datetime="2025-01-28T09:05:00Z">
+                   2025-01-28 09:05
+                  </td>
+                  <td data-endpoint="/messages">
+                   /messages
+                  </td>
+                  <td data-action="sendSMS">
+                   sendSMS
+                  </td>
+                  <td data-status="Success">
+                   <span class="badge bg-success">
+                    Success
+                   </span>
+                  </td>
+                  <td data-duration="182">
+                   182
+                  </td>
+                  <td>
+                   SMS delivered to +15551230001
+                  </td>
+                 </tr>
+                 <tr>
+                  <td data-datetime="2025-01-28T08:41:00Z">
+                   2025-01-28 08:41
+                  </td>
+                  <td data-endpoint="/messages">
+                   /messages
+                  </td>
+                  <td data-action="sendWhatsApp">
+                   sendWhatsApp
+                  </td>
+                  <td data-status="Failed">
+                   <span class="badge bg-danger">
+                    Failed
+                   </span>
+                  </td>
+                  <td data-duration="312">
+                   312
+                  </td>
+                  <td>
+                   Invalid WhatsApp number
+                  </td>
+                 </tr>
+                 <tr>
+                  <td data-datetime="2025-01-27T19:23:00Z">
+                   2025-01-27 19:23
+                  </td>
+                  <td data-endpoint="/calls">
+                   /calls
+                  </td>
+                  <td data-action="placeCall">
+                   placeCall
+                  </td>
+                  <td data-status="Success">
+                   <span class="badge bg-success">
+                    Success
+                   </span>
+                  </td>
+                  <td data-duration="956">
+                   956
+                  </td>
+                  <td>
+                   Call started
+                  </td>
+                 </tr>
+                 <tr>
+                  <td data-datetime="2025-01-27T11:14:00Z">
+                   2025-01-27 11:14
+                  </td>
+                  <td data-endpoint="/messages">
+                   /messages
+                  </td>
+                  <td data-action="sendSMS">
+                   sendSMS
+                  </td>
+                  <td data-status="Success">
+                   <span class="badge bg-success">
+                    Success
+                   </span>
+                  </td>
+                  <td data-duration="204">
+                   204
+                  </td>
+                  <td>
+                   Queued for delivery
+                  </td>
+                 </tr>
+                 <tr>
+                  <td data-datetime="2025-01-26T16:51:00Z">
+                   2025-01-26 16:51
+                  </td>
+                  <td data-endpoint="/messages">
+                   /messages
+                  </td>
+                  <td data-action="sendSMS">
+                   sendSMS
+                  </td>
+                  <td data-status="Failed">
+                   <span class="badge bg-danger">
+                    Failed
+                   </span>
+                  </td>
+                  <td data-duration="427">
+                   427
+                  </td>
+                  <td>
+                   Auth error (401)
+                  </td>
+                 </tr>
+                 <tr>
+                  <td data-datetime="2025-01-26T08:07:00Z">
+                   2025-01-26 08:07
+                  </td>
+                  <td data-endpoint="/messages">
+                   /messages
+                  </td>
+                  <td data-action="sendWhatsApp">
+                   sendWhatsApp
+                  </td>
+                  <td data-status="Success">
+                   <span class="badge bg-success">
+                    Success
+                   </span>
+                  </td>
+                  <td data-duration="238">
+                   238
+                  </td>
+                  <td>
+                   Message sent
+                  </td>
+                 </tr>
+                </tbody>
+               </table>
+              </div>
+             </div>
+             <div class="card-footer d-flex justify-content-between align-items-center">
+              <div class="text-muted small">
+               Showing 1–6 of 24
+              </div>
+              <nav>
+               <ul class="pagination pagination-sm mb-0">
+                <li class="page-item disabled">
+                 <a class="page-link" href="#">
+                  Prev
+                 </a>
+                </li>
+                <li class="page-item active">
+                 <span class="page-link">
+                  1
+                 </span>
+                </li>
+                <li class="page-item">
+                 <a class="page-link" href="#">
+                  2
+                 </a>
+                </li>
+                <li class="page-item">
+                 <a class="page-link" href="#">
+                  3
+                 </a>
+                </li>
+                <li class="page-item">
+                 <a class="page-link" href="#">
+                  Next
+                 </a>
+                </li>
+               </ul>
+              </nav>
+             </div>
+            </div>
+           </div>
+          </div>
+         </div>
+         <!-- Alert Settings Panel -->
+         <div aria-labelledby="tab-alerts" class="tab-pane fade" id="panel-alerts" role="tabpanel" tabindex="0">
+          <div class="card">
+           <div class="card-header">
+            <div class="d-flex align-items-center gap-2">
+             <i class="fa-solid fa-bell">
+             </i>
+             <span class="widget-title">
+              Global Alert Settings
+             </span>
+            </div>
+            <button class="btn btn-primary btn-sm" disabled="" id="btnSaveAlerts">
+             <i class="fa-solid fa-floppy-disk me-1">
+             </i>
+             Save Settings
+            </button>
+           </div>
+           <div class="card-body">
+            <form id="formAlerts">
+             <div class="row g-3">
+              <div class="col-12 col-md-6">
+               <label class="form-label" for="defaultSeverity">
+                Default Severity
+               </label>
+               <select class="form-select" id="defaultSeverity">
+                <option value="low">
+                 Low
+                </option>
+                <option value="medium">
+                 Medium
+                </option>
+                <option value="high">
+                 High
+                </option>
+                <option value="critical">
+                 Critical
+                </option>
+               </select>
+              </div>
+              <div class="col-12 col-md-6">
+               <label class="form-label">
+                Default Channels
+               </label>
+               <div class="d-flex flex-wrap gap-3">
+                <div class="form-check form-switch">
+                 <input checked="" class="form-check-input" id="chEmail" type="checkbox"/>
+                 <label class="form-check-label" for="chEmail">
+                  Email
+                 </label>
+                </div>
+                <div class="form-check form-switch">
+                 <input checked="" class="form-check-input" id="chSMS" type="checkbox"/>
+                 <label class="form-check-label" for="chSMS">
+                  SMS
+                 </label>
+                </div>
+                <div class="form-check form-switch">
+                 <input class="form-check-input" id="chWhatsApp" type="checkbox"/>
+                 <label class="form-check-label" for="chWhatsApp">
+                  WhatsApp
+                 </label>
+                </div>
+                <div class="form-check form-switch">
+                 <input class="form-check-input" id="chPush" type="checkbox"/>
+                 <label class="form-check-label" for="chPush">
+                  Push
+                 </label>
+                </div>
+               </div>
+              </div>
+              <div class="col-12 col-md-6">
+               <label class="form-label" for="rateLimit">
+                Rate Limit (alerts per minute)
+               </label>
+               <input class="form-control" id="rateLimit" min="1" type="number" value="30"/>
+              </div>
+              <div class="col-12 col-md-6">
+               <label class="form-label" for="escalateAfter">
+                Escalate After (minutes)
+               </label>
+               <input class="form-control" id="escalateAfter" min="1" type="number" value="10"/>
+              </div>
+              <div class="col-12">
+               <div class="alert alert-warning mb-0">
+                <i class="fa-solid fa-triangle-exclamation me-2">
+                </i>
+                These defaults apply system-wide unless overridden per zone.
+               </div>
+              </div>
+             </div>
+            </form>
+           </div>
+          </div>
+         </div>
+         <!-- Data Retention Panel -->
+         <div aria-labelledby="tab-data" class="tab-pane fade" id="panel-data" role="tabpanel" tabindex="0">
+          <div class="card">
+           <div class="card-header">
+            <div class="d-flex align-items-center gap-2">
+             <i class="fa-solid fa-database">
+             </i>
+             <span class="widget-title">
+              Data Retention Policies
+             </span>
+            </div>
+            <button class="btn btn-primary btn-sm" disabled="" id="btnSavePolicies">
+             <i class="fa-solid fa-floppy-disk me-1">
+             </i>
+             Save Policies
+            </button>
+           </div>
+           <div class="card-body">
+            <form id="formPolicies">
+             <div class="row g-3">
+              <div class="col-12 col-md-6">
+               <label class="form-label" for="retentionAlertLogs">
+                Retain alert logs for (days):
+               </label>
+               <input class="form-control" id="retentionAlertLogs" min="1" type="number" value="365"/>
+              </div>
+              <div class="col-12 col-md-6">
+               <label class="form-label" for="retentionHeatmap">
+                Retain historical heatmap data for (days):
+               </label>
+               <input class="form-control" id="retentionHeatmap" min="1" type="number" value="180"/>
+              </div>
+              <div class="col-12">
+               <div class="alert alert-info">
+                <i class="fa-solid fa-scale-balanced me-2">
+                </i>
+                Note: Setting appropriate data retention policies is crucial for compliance with regulations such as GDPR and CCPA.
+               </div>
+              </div>
+             </div>
+            </form>
+           </div>
+          </div>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </main>
+   </div>
+   <!-- Footer -->
+   <footer class="bg-dark border-top border-secondary text-white-50 small py-2">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+     <div class="d-flex align-items-center gap-2">
+      <img alt="CrowShield AI" onerror="this.onerror=null;this.src='https://picsum.photos/seed/crowshield/120/20'" src="https://data-smith.ai/wp-content/uploads/2025/01/logo_transparent_background.png" style="height:20px;"/>
+      <span>
+       CrowShield AI Admin
+      </span>
+     </div>
+     <div class="d-none d-md-flex gap-3">
+      <a class="link-light text-decoration-none" href="./zone_management.html">
+       <i class="fa-solid fa-plus me-1">
+       </i>
+       New Zone
+      </a>
+      <a class="link-light text-decoration-none" href="./user_management.html">
+       <i class="fa-solid fa-users-gear me-1">
+       </i>
+       User Mgmt
+      </a>
+     </div>
+     <div class="d-flex gap-3">
+      <a class="link-light text-decoration-none" href="#">
+       Terms
+      </a>
+      <a class="link-light text-decoration-none" href="#">
+       Privacy
+      </a>
+     </div>
+    </div>
+   </footer>
+  </div>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11">
+  </script>
+  <!-- Chart.js -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js">
+  </script>
+  <!-- Bootstrap 5 JS -->
+  <script crossorigin="anonymous" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <script>
+   // State holders for change detection
+const initialState = {
+    sid: '',
+    token: '',
+    phone: '',
+    alerts: {
+        severity: 'medium',
+        channels: {
+            email: true,
+            sms: true,
+            whatsapp: false,
+            push: false
+        },
+        rate: 30,
+        escalate: 10
+    },
+    retention: {
+        logs: 365,
+        heatmap: 180
+    }
+};
+
+function setConnStatus(status) {
+    const badge = document.getElementById('connStatusBadge');
+    const dot = document.getElementById('connDot');
+    const text = document.getElementById('connText');
+    badge.classList.remove('bg-secondary', 'bg-success', 'bg-danger', 'bg-warning');
+    dot.className = 'status-dot';
+    switch (status) {
+        case 'success':
+            badge.classList.add('bg-success');
+            badge.textContent = 'Success';
+            dot.classList.add('success');
+            text.textContent = 'Connected';
+            break;
+        case 'failed':
+            badge.classList.add('bg-danger');
+            badge.textContent = 'Failed';
+            dot.classList.add('error');
+            text.textContent = 'Connection failed';
+            break;
+        case 'testing':
+            badge.classList.add('bg-warning');
+            badge.textContent = 'Testing...';
+            dot.classList.add('info');
+            text.textContent = 'Testing connection...';
+            break;
+        default:
+            badge.classList.add('bg-secondary');
+            badge.textContent = 'Untested';
+            text.textContent = 'Not tested';
+            break;
+    }
+}
+
+function updateSaveButtons() {
+    // API form
+    const sid = document.getElementById('twilioSid').value.trim();
+    const token = document.getElementById('twilioToken').value.trim();
+    const phone = document.getElementById('twilioPhone').value.trim();
+    const changedApi = (sid !== initialState.sid) || (token !== initialState.token) || (phone !== initialState.phone);
+    document.getElementById('btnSaveApi').disabled = !changedApi;
+
+    // Alerts
+    const curAlerts = {
+        severity: document.getElementById('defaultSeverity').value,
+        channels: {
+            email: document.getElementById('chEmail').checked,
+            sms: document.getElementById('chSMS').checked,
+            whatsapp: document.getElementById('chWhatsApp').checked,
+            push: document.getElementById('chPush').checked
+        },
+        rate: Number(document.getElementById('rateLimit').value || 0),
+        escalate: Number(document.getElementById('escalateAfter').value || 0)
+    };
+    const changedAlerts = JSON.stringify(curAlerts) !== JSON.stringify(initialState.alerts);
+    document.getElementById('btnSaveAlerts').disabled = !changedAlerts;
+
+    // Policies
+    const logs = Number(document.getElementById('retentionAlertLogs').value || 0);
+    const heatmap = Number(document.getElementById('retentionHeatmap').value || 0);
+    const changedPol = logs !== initialState.retention.logs || heatmap !== initialState.retention.heatmap;
+    document.getElementById('btnSavePolicies').disabled = !changedPol;
+}
+
+function validPhone(num) {
+    return /^\+?[1-9]\d{7,14}$/.test(num);
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // Show loading feedback
+    const feedback = document.getElementById('systemFeedback');
+    feedback.classList.remove('d-none');
+    feedback.textContent = 'Loading current settings...';
+
+    // Simulated fetch of current settings
+    setTimeout(() => {
+        // Populate with masked values
+        initialState.sid = 'AC***************7890';
+        initialState.token = '********************************';
+        initialState.phone = '+15551234567';
+        document.getElementById('twilioSid').value = initialState.sid;
+        document.getElementById('twilioToken').value = initialState.token;
+        document.getElementById('twilioPhone').value = initialState.phone;
+
+        // Alerts defaults
+        initialState.alerts = {
+            severity: 'medium',
+            channels: {
+                email: true,
+                sms: true,
+                whatsapp: false,
+                push: false
+            },
+            rate: 30,
+            escalate: 10
+        };
+        document.getElementById('defaultSeverity').value = initialState.alerts.severity;
+        document.getElementById('chEmail').checked = initialState.alerts.channels.email;
+        document.getElementById('chSMS').checked = initialState.alerts.channels.sms;
+        document.getElementById('chWhatsApp').checked = initialState.alerts.channels.whatsapp;
+        document.getElementById('chPush').checked = initialState.alerts.channels.push;
+        document.getElementById('rateLimit').value = initialState.alerts.rate;
+        document.getElementById('escalateAfter').value = initialState.alerts.escalate;
+
+        // Retention
+        initialState.retention = {
+            logs: 365,
+            heatmap: 180
+        };
+        document.getElementById('retentionAlertLogs').value = initialState.retention.logs;
+        document.getElementById('retentionHeatmap').value = initialState.retention.heatmap;
+
+        feedback.classList.replace('alert-info', 'alert-success');
+        feedback.innerHTML = '<i class="fa-solid fa-circle-check me-2"></i>Settings loaded successfully.';
+        setTimeout(() => feedback.classList.add('d-none'), 1800);
+    }, 600);
+
+    // Toggle Twilio token visibility
+    document.getElementById('toggleToken').addEventListener('click', () => {
+        const input = document.getElementById('twilioToken');
+        const icon = document.querySelector('#toggleToken i');
+        if (input.type === 'password') {
+            input.type = 'text';
+            icon.classList.replace('fa-eye', 'fa-eye-slash');
+        } else {
+            input.type = 'password';
+            icon.classList.replace('fa-eye-slash', 'fa-eye');
+        }
+    });
+
+    // Test Connection
+    document.getElementById('btnTestConnection').addEventListener('click', async () => {
+        const sid = document.getElementById('twilioSid').value.trim();
+        const token = document.getElementById('twilioToken').value.trim();
+        const phone = document.getElementById('twilioPhone').value.trim();
+        if (!sid || !token || !validPhone(phone)) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Check inputs',
+                text: 'Please provide valid SID, Token and Phone number before testing.'
+            });
+            return;
+        }
+        const btn = document.getElementById('btnTestConnection');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Testing...';
+        setConnStatus('testing');
+        // Simulate API test
+        setTimeout(() => {
+            const isOk = Math.random() > 0.2; // 80% success
+            if (isOk) {
+                setConnStatus('success');
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Connection Successful',
+                    text: 'Twilio credentials verified.'
+                });
+            } else {
+                setConnStatus('failed');
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Connection Failed',
+                    text: 'Please verify your credentials and network connectivity.'
+                });
+            }
+            btn.disabled = false;
+            btn.innerHTML = '<i class="fa-solid fa-vial me-1"></i>Test Connection';
+        }, 1200);
+    });
+
+    // Save API
+    document.getElementById('btnSaveApi').addEventListener('click', () => {
+        const sid = document.getElementById('twilioSid').value.trim();
+        const token = document.getElementById('twilioToken').value.trim();
+        const phone = document.getElementById('twilioPhone').value.trim();
+        if (!sid || !token || !validPhone(phone)) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Invalid input',
+                text: 'Please fill out all required fields with valid values.'
+            });
+            return;
+        }
+        const btn = document.getElementById('btnSaveApi');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Saving...';
+        setTimeout(() => {
+            initialState.sid = sid;
+            initialState.token = token;
+            initialState.phone = phone;
+            updateSaveButtons();
+            btn.innerHTML = '<i class="fa-solid fa-floppy-disk me-1"></i>Save Changes';
+            Swal.fire({
+                toast: true,
+                position: 'top',
+                icon: 'success',
+                title: 'API settings saved',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        }, 900);
+    });
+
+    // Save Alerts
+    document.getElementById('btnSaveAlerts').addEventListener('click', () => {
+        const newState = {
+            severity: document.getElementById('defaultSeverity').value,
+            channels: {
+                email: document.getElementById('chEmail').checked,
+                sms: document.getElementById('chSMS').checked,
+                whatsapp: document.getElementById('chWhatsApp').checked,
+                push: document.getElementById('chPush').checked
+            },
+            rate: Number(document.getElementById('rateLimit').value || 0),
+            escalate: Number(document.getElementById('escalateAfter').value || 0)
+        };
+        const btn = document.getElementById('btnSaveAlerts');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Saving...';
+        setTimeout(() => {
+            initialState.alerts = newState;
+            updateSaveButtons();
+            btn.innerHTML = '<i class="fa-solid fa-floppy-disk me-1"></i>Save Settings';
+            Swal.fire({
+                toast: true,
+                position: 'top',
+                icon: 'success',
+                title: 'Alert settings saved',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        }, 800);
+    });
+
+    // Save Policies
+    document.getElementById('btnSavePolicies').addEventListener('click', () => {
+        const logs = Number(document.getElementById('retentionAlertLogs').value || 0);
+        const heatmap = Number(document.getElementById('retentionHeatmap').value || 0);
+        if (logs < 1 || heatmap < 1) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Invalid values',
+                text: 'Please enter positive integers for retention periods.'
+            });
+            return;
+        }
+        const btn = document.getElementById('btnSavePolicies');
+        btn.disabled = true;
+        btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span>Saving...';
+        setTimeout(() => {
+            initialState.retention = {
+                logs,
+                heatmap
+            };
+            updateSaveButtons();
+            btn.innerHTML = '<i class="fa-solid fa-floppy-disk me-1"></i>Save Policies';
+            Swal.fire({
+                toast: true,
+                position: 'top',
+                icon: 'success',
+                title: 'Retention policies saved',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        }, 700);
+    });
+
+    // Input change listeners for enabling save buttons
+    ['twilioSid', 'twilioToken', 'twilioPhone', 'defaultSeverity', 'rateLimit', 'escalateAfter', 'retentionAlertLogs', 'retentionHeatmap']
+    .forEach(id => document.getElementById(id).addEventListener('input', updateSaveButtons));
+    ['chEmail', 'chSMS', 'chWhatsApp', 'chPush']
+    .forEach(id => document.getElementById(id).addEventListener('change', updateSaveButtons));
+
+    // Hash-based tab activation (#api, #alerts, #data)
+    const hashToTab = {
+        '#api': '#panel-api',
+        '#alerts': '#panel-alerts',
+        '#data': '#panel-data'
+    };
+
+    function activateHashTab() {
+        const h = (location.hash || '').toLowerCase();
+        if (hashToTab[h]) {
+            const target = document.querySelector(`button[data-bs-target="${hashToTab[h]}"]`);
+            if (target) {
+                new bootstrap.Tab(target).show();
+            }
+        }
+    }
+    activateHashTab();
+    document.getElementById('settingsTab').addEventListener('shown.bs.tab', (e) => {
+        const targetId = e.target.getAttribute('data-bs-target');
+        const tabToHash = {
+            '#panel-api': '#api',
+            '#panel-alerts': '#alerts',
+            '#panel-data': '#data'
+        };
+        const newHash = tabToHash[targetId] || '';
+        if (newHash && location.hash !== newHash) {
+            history.replaceState(null, '', newHash);
+        }
+    });
+
+    // Chart.js: simple success vs failed over 7 days
+    const ctx = document.getElementById('apiChart');
+    const apiChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            datasets: [{
+                label: 'Success',
+                data: [92, 88, 95, 97, 93, 90, 96],
+                borderColor: '#00774E',
+                backgroundColor: 'rgba(0,119,78,0.1)',
+                fill: true,
+                tension: 0.35,
+                pointRadius: 3
+            }, {
+                label: 'Failed',
+                data: [8, 12, 5, 3, 7, 10, 4],
+                borderColor: '#CD2026',
+                backgroundColor: 'rgba(205,32,38,0.1)',
+                fill: true,
+                tension: 0.35,
+                pointRadius: 3
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                legend: {
+                    position: 'bottom'
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false
+                }
+            },
+            scales: {
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Calls (%)'
+                    },
+                    min: 0,
+                    max: 100
+                }
+            }
+        }
+    });
+
+    // Table sorting and filtering
+    const logTable = document.getElementById('logTable');
+    const getCellData = (tr, key) => tr.querySelector(`[data-${key}]`)?.dataset[key] || tr.children[0].textContent;
+    let sortState = {
+        key: null,
+        dir: 1
+    };
+    document.querySelectorAll('#logTable thead th.sortable').forEach(th => {
+        th.style.cursor = 'pointer';
+        th.addEventListener('click', () => {
+            const key = th.getAttribute('data-sort');
+            const tbody = logTable.querySelector('tbody');
+            const rows = Array.from(tbody.querySelectorAll('tr'));
+            if (sortState.key === key) {
+                sortState.dir *= -1;
+            } else {
+                sortState = {
+                    key,
+                    dir: 1
+                };
+            }
+            rows.sort((a, b) => {
+                const av = getCellData(a, key);
+                const bv = getCellData(b, key);
+                if (key === 'datetime' || key === 'duration') {
+                    const na = key === 'datetime' ? Date.parse(av) : Number(av);
+                    const nb = key === 'datetime' ? Date.parse(bv) : Number(bv);
+                    return (na - nb) * sortState.dir;
+                }
+                return av.localeCompare(bv) * sortState.dir;
+            });
+            tbody.innerHTML = '';
+            rows.forEach(r => tbody.appendChild(r));
+        });
+    });
+    document.getElementById('logFilter').addEventListener('input', (e) => {
+        const q = e.target.value.toLowerCase();
+        logTable.querySelectorAll('tbody tr').forEach(tr => {
+            const text = tr.textContent.toLowerCase();
+            tr.style.display = text.includes(q) ? '' : 'none';
+        });
+    });
+
+    // Recalculate save buttons initial state
+    updateSaveButtons();
+});
+  </script>
+ </body>
+</html>

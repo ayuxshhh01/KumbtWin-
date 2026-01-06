@@ -1,0 +1,93 @@
+/* Zone Management Page CSS (zone_management.css)
+   Keep this file focused on page-specific layout and minimal overrides. */
+/* Use Poppins as brand font on this page while preserving theme fallbacks */
+body {
+    font-family: "Poppins", var(--font-sans)
+    }
+/* Layout adjustments to ensure sidebar + content coexist nicely */
+@media (min-width: 992px) {
+    #csSidebar {
+        position: sticky;
+        top: 0
+        }
+    }
+/* Map container height and responsiveness */
+.zm-map {
+    height: 520px;
+    min-height: 360px;
+    background: var(--surface-muted)
+    }
+@media (min-width: 1200px) {
+    .zm-map {
+        height: 560px
+        }
+    }
+@media (max-width: 575.98px) {
+    .zm-map {
+        height: 420px
+        }
+    }
+/* Zone list scroll behavior */
+.zm-zone-list {
+    max-height: 600px;
+    overflow: auto
+    }
+@media (max-width: 991.98px) {
+    .zm-zone-list {
+        max-height: 320px
+        }
+    }
+/* Active list item contrast and focus */
+.zm-zone-item.active {
+    background: var(--info-soft);
+    border-left: 3px solid var(--color-info)
+    }
+.zm-zone-item .btn {
+    transition: transform 0.05s ease
+    }
+.zm-zone-item .btn:active {
+    transform: translatey(1px)
+    }
+/* Tiles mode for zone list (visual alt view) */
+.zm-tiles .list-group-item {
+    display: inline-block;
+    width: calc(50% - 8px);
+    margin: 4px;
+    vertical-align: top
+    }
+@media (min-width: 768px) {
+    .zm-tiles .list-group-item {
+        width: calc(33.333% - 8px)
+        }
+    }
+@media (min-width: 1200px) {
+    .zm-tiles .list-group-item {
+        width: calc(25% - 8px)
+        }
+    }
+/* Map skeleton overlay radius to match card */
+#mapSkeleton {
+    border-bottom-left-radius: var(--radius-2);
+    border-bottom-right-radius: var(--radius-2)
+    }
+/* Buttons in card headers */
+.btn-icon {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center
+    }
+/* Rule editor multi-select height */
+#notificationGroups {
+    min-height: 96px
+    }
+/* Improve breadcrumb spacing */
+.breadcrumb {
+    padding-top: 0;
+    padding-bottom: 0
+    }
+/* Analytics chart canvas adjust */
+#zoneChart {
+    width: 100%
+    }

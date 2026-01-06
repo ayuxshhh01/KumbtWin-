@@ -1,0 +1,35 @@
+/* login_page.css - Page-specific styles for CrowShield AI Login */
+/* Brand typography override for this page */
+body {
+    font-family: "Poppins", var(--font-sans)
+    }
+/* Ensure main content fills available space between header and footer */
+.auth-main {
+    min-height: calc(100vh - 96px);
+    /* approx header(48) + footer(48) */
+    }
+/* Fine-tune login card spacing on very small screens */
+@media (max-width: 380px) {
+    .login-form-container {
+        padding: var(--space-4)
+        }
+    }
+/* Align the toggle icon height with inputs */
+#togglePassword {
+    border-left: 0
+    }
+#togglePassword:focus {
+    box-shadow: none
+    }
+/* Error alert spacing */
+#authError {
+    margin-bottom: var(--space-3)
+    }
+/* Demo credentials table tweaks */
+.card .table th, .card .table td {
+    vertical-align: middle
+    }
+/* Make the header/footer brand images look crisp on light bg */
+.navbar-dark .navbar-brand img, footer img {
+    filter: none
+    }

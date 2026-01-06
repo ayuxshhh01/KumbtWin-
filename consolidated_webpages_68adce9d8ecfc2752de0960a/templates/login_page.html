@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <meta content="CrowShield AI Login - Secure access for authorized users." name="description"/>
+  <title>
+   CrowShield AI • Login
+  </title>
+  <!-- Google Font: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <!-- Bootstrap 5 CSS -->
+  <link crossorigin="anonymous" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" rel="stylesheet"/>
+  <!-- Font Awesome 6 -->
+  <link crossorigin="anonymous" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2Pkf9l9GZIkT1s2V+5V7c6F0sx8GZFOD9oTiFqou7Pqg0HkCqJQwC9gN1g==" referrerpolicy="no-referrer" rel="stylesheet">
+   <!-- SweetAlert2 CSS -->
+   <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.min.css" rel="stylesheet"/>
+   <!-- Site Theme CSS -->
+   <link href="static/style.css" rel="stylesheet"/>
+   <!-- Page-specific CSS -->
+   <link href="login_page.css" rel="stylesheet"/>
+  </link>
+ </head>
+ <body>
+  <!-- Common Auth Header (Use as-is; no sidebar on login page) -->
+  <header class="navbar navbar-dark bg-dark border-bottom border-secondary py-2">
+   <div class="container-fluid justify-content-center">
+    <a class="navbar-brand d-flex align-items-center gap-2" href="#" title="CrowShield AI">
+     <img alt="CrowShield AI" onerror="this.onerror=null;this.src='https://picsum.photos/seed/crowshield-logo/32/32?grayscale';" src="https://data-smith.ai/wp-content/uploads/2025/01/logo_transparent_background.png" style="height:32px;"/>
+     <span class="fw-bold">
+      CrowShield AI
+     </span>
+    </a>
+   </div>
+  </header>
+  <main class="auth-main d-flex align-items-center py-4" id="main" role="main">
+   <div class="container">
+    <div class="row justify-content-center">
+     <div class="col-12 col-md-8 col-lg-5">
+      <div class="login-form-container">
+       <div class="text-center mb-3">
+        <img alt="CrowShield AI" class="rounded" height="56" onerror="this.onerror=null;this.src='https://picsum.photos/seed/crowshield-login/56/56?grayscale';" src="https://data-smith.ai/wp-content/uploads/2025/01/logo_transparent_background.png" width="56"/>
+        <h1 class="h4 mt-2 mb-0 title-text">
+         Sign in to CrowShield AI
+        </h1>
+        <p class="small text-muted mb-0">
+         Operational Intelligence • Secure Access
+        </p>
+       </div>
+       <!-- Error area (inline) -->
+       <div aria-live="assertive" class="alert alert-danger d-none" id="authError" role="alert">
+       </div>
+       <!-- Authentication Form -->
+       <form id="loginForm" novalidate="">
+        <div class="mb-3">
+         <label class="form-label" for="email">
+          Email address
+         </label>
+         <div class="input-group">
+          <span class="input-group-text bg-muted">
+           <i class="fa-solid fa-envelope">
+           </i>
+          </span>
+          <input aria-describedby="emailHelp" autocomplete="username" class="form-control" id="email" name="email" placeholder="name@example.com" required="" type="email"/>
+         </div>
+         <div class="form-text" id="emailHelp">
+          Use your authorized work email.
+         </div>
+         <div class="invalid-feedback">
+          Please enter a valid email address.
+         </div>
+        </div>
+        <div class="mb-2">
+         <label class="form-label" for="password">
+          Password
+         </label>
+         <div class="input-group">
+          <span class="input-group-text bg-muted">
+           <i class="fa-solid fa-lock">
+           </i>
+          </span>
+          <input aria-describedby="passwordHelp" autocomplete="current-password" class="form-control" id="password" name="password" placeholder="Your password" required="" type="password"/>
+          <button aria-label="Toggle password visibility" class="btn btn-light toggle-visibility-icon" id="togglePassword" title="Show/Hide Password" type="button">
+           <i class="fa-solid fa-eye" id="toggleIcon">
+           </i>
+          </button>
+         </div>
+         <div class="form-text" id="passwordHelp">
+          Minimum 8 characters recommended.
+         </div>
+         <div class="invalid-feedback">
+          Password is required.
+         </div>
+         <div class="small text-warning mt-1 d-none" id="capsWarning">
+          <i class="fa-solid fa-triangle-exclamation me-1">
+          </i>
+          Caps Lock is ON
+         </div>
+        </div>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+         <div class="form-check">
+          <input class="form-check-input" id="rememberMe" type="checkbox" value="1"/>
+          <label class="form-check-label" for="rememberMe">
+           Remember me
+          </label>
+         </div>
+         <a class="text-decoration-none" href="./forgot-password.html">
+          Forgot Password?
+         </a>
+        </div>
+        <div class="d-grid gap-2">
+         <button class="btn btn-primary" id="submitBtn" type="submit">
+          <span class="btn-text">
+           Log In
+          </span>
+         </button>
+        </div>
+        <input id="authenticationApiUrl" type="hidden" value="/api/auth/login"/>
+       </form>
+       <hr class="my-4"/>
+       <!-- Helpful info / security note -->
+       <div class="small text-muted">
+        <i class="fa-solid fa-shield-halved me-1 text-success">
+        </i>
+        You are accessing a secure system. Unauthorized access is prohibited and may be subject to disciplinary action and prosecution.
+       </div>
+      </div>
+      <!-- Test credentials section -->
+      <div class="card mt-3">
+       <div class="card-header d-flex align-items-center gap-2">
+        <i class="fa-solid fa-flask text-info">
+        </i>
+        <strong>
+         Test Accounts (for demo)
+        </strong>
+       </div>
+       <div class="card-body small">
+        <p class="text-muted mb-2">
+         Use any of the credentials below to test role-based redirects:
+        </p>
+        <div class="table-responsive">
+         <table class="table table-sm table-theme align-middle mb-0">
+          <thead>
+           <tr>
+            <th>
+             Role
+            </th>
+            <th>
+             Email
+            </th>
+            <th>
+             Password
+            </th>
+            <th>
+             Redirects to
+            </th>
+           </tr>
+          </thead>
+          <tbody>
+           <tr>
+            <td>
+             <span class="badge-soft info">
+              Admin
+             </span>
+            </td>
+            <td>
+             <code>
+              admin@crowshield.ai
+             </code>
+            </td>
+            <td>
+             <code>
+              Admin@123
+             </code>
+            </td>
+            <td>
+             <a class="text-decoration-none" href="./user_management.html">
+              user_management.html
+             </a>
+            </td>
+           </tr>
+           <tr>
+            <td>
+             <span class="badge-soft success">
+              Operator
+             </span>
+            </td>
+            <td>
+             <code>
+              operator@crowshield.ai
+             </code>
+            </td>
+            <td>
+             <code>
+              Operator@123
+             </code>
+            </td>
+            <td>
+             <a class="text-decoration-none" href="./main_dashboard.html">
+              main_dashboard.html
+             </a>
+            </td>
+           </tr>
+           <tr>
+            <td>
+             <span class="badge-soft primary">
+              Zone Manager
+             </span>
+            </td>
+            <td>
+             <code>
+              zonemgr@crowshield.ai
+             </code>
+            </td>
+            <td>
+             <code>
+              ZoneMgr@123
+             </code>
+            </td>
+            <td>
+             <a class="text-decoration-none" href="./zone_management.html">
+              zone_management.html
+             </a>
+            </td>
+           </tr>
+           <tr>
+            <td>
+             <span class="badge-soft warning">
+              Analyst
+             </span>
+            </td>
+            <td>
+             <code>
+              analyst@crowshield.ai
+             </code>
+            </td>
+            <td>
+             <code>
+              Analyst@123
+             </code>
+            </td>
+            <td>
+             <a class="text-decoration-none" href="./reports_page.html">
+              reports_page.html
+             </a>
+            </td>
+           </tr>
+           <tr>
+            <td>
+             <span class="badge-soft error">
+              SysOps
+             </span>
+            </td>
+            <td>
+             <code>
+              sysops@crowshield.ai
+             </code>
+            </td>
+            <td>
+             <code>
+              SysOps@123
+             </code>
+            </td>
+            <td>
+             <a class="text-decoration-none" href="./system_settings.html">
+              system_settings.html
+             </a>
+            </td>
+           </tr>
+           <tr>
+            <td>
+             <span class="badge-soft secondary">
+              Responder
+             </span>
+            </td>
+            <td>
+             <code>
+              responder@crowshield.ai
+             </code>
+            </td>
+            <td>
+             <code>
+              Responder@123
+             </code>
+            </td>
+            <td>
+             <a class="text-decoration-none" href="./alert_details.html">
+              alert_details.html
+             </a>
+            </td>
+           </tr>
+          </tbody>
+         </table>
+        </div>
+        <p class="mt-2 text-muted">
+         Note: These are demo credentials. Do not use real passwords.
+        </p>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </main>
+  <!-- Common Auth Footer -->
+  <footer class="bg-dark border-top border-secondary text-white-50 small py-2 mt-auto">
+   <div class="container-fluid d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center gap-2">
+     <img alt="CrowShield AI" onerror="this.onerror=null;this.src='https://picsum.photos/seed/crowshield-footer/20/20?grayscale';" src="https://data-smith.ai/wp-content/uploads/2025/01/logo_transparent_background.png" style="height:20px;"/>
+     <span>
+      CrowShield AI
+     </span>
+    </div>
+    <div class="d-flex gap-3">
+     <a class="link-light text-decoration-none" href="#">
+      Terms
+     </a>
+     <a class="link-light text-decoration-none" href="#">
+      Privacy
+     </a>
+    </div>
+   </div>
+  </footer>
+  <!-- Toast container (system feedback) -->
+  <div class="position-fixed top-0 end-0 p-3" style="z-index: 1060">
+   <div aria-atomic="true" aria-live="assertive" class="toast align-items-center text-bg-dark border-0" id="appToast" role="alert">
+    <div class="d-flex">
+     <div class="toast-body">
+     </div>
+     <button aria-label="Close" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" type="button">
+     </button>
+    </div>
+   </div>
+  </div>
+  <noscript>
+   <div class="container my-3">
+    <div class="alert alert-warning" role="alert">
+     JavaScript is disabled. Please enable JavaScript to use the CrowShield AI application.
+    </div>
+   </div>
+  </noscript>
+  <!-- JS: Bootstrap Bundle -->
+  <script crossorigin="anonymous" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <!-- SweetAlert2 -->
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js">
+  </script>
+  <script>
+   document.addEventListener('DOMContentLoaded', function() {
+    // Elements
+    const form = document.getElementById('loginForm');
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const submitBtn = document.getElementById('submitBtn');
+    const authError = document.getElementById('authError');
+    const capsWarning = document.getElementById('capsWarning');
+
+    // Password visibility toggle
+    const toggleBtn = document.getElementById('togglePassword');
+    const toggleIcon = document.getElementById('toggleIcon');
+    toggleBtn.addEventListener('click', () => {
+        const isPassword = passwordInput.getAttribute('type') === 'password';
+        passwordInput.setAttribute('type', isPassword ? 'text' : 'password');
+        toggleIcon.classList.toggle('fa-eye');
+        toggleIcon.classList.toggle('fa-eye-slash');
+    });
+
+    // Caps Lock detection
+    passwordInput.addEventListener('keyup', (e) => {
+        const capsOn = e.getModifierState && e.getModifierState('CapsLock');
+        capsWarning.classList.toggle('d-none', !capsOn);
+    });
+
+    // Bootstrap toast helper
+    function showToast(message) {
+        const toastEl = document.getElementById('appToast');
+        if (!toastEl) return;
+        toastEl.querySelector('.toast-body').textContent = message;
+        const toast = new bootstrap.Toast(toastEl, {
+            delay: 3500
+        });
+        toast.show();
+    }
+
+    // Simple email validator
+    function isValidEmail(value) {
+        return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(value).toLowerCase());
+    }
+
+    // Mock users and redirects (role-based)
+    const USERS = [{
+        email: 'admin@crowshield.ai',
+        password: 'Admin@123',
+        role: 'Admin',
+        redirect: './user_management.html'
+    }, {
+        email: 'operator@crowshield.ai',
+        password: 'Operator@123',
+        role: 'Operator',
+        redirect: './main_dashboard.html'
+    }, {
+        email: 'zonemgr@crowshield.ai',
+        password: 'ZoneMgr@123',
+        role: 'ZoneManager',
+        redirect: './zone_management.html'
+    }, {
+        email: 'analyst@crowshield.ai',
+        password: 'Analyst@123',
+        role: 'Analyst',
+        redirect: './reports_page.html'
+    }, {
+        email: 'sysops@crowshield.ai',
+        password: 'SysOps@123',
+        role: 'SysOps',
+        redirect: './system_settings.html'
+    }, {
+        email: 'responder@crowshield.ai',
+        password: 'Responder@123',
+        role: 'Responder',
+        redirect: './alert_details.html'
+    }];
+
+    // Simulated authentication API call
+    function authenticate(email, password) {
+        return new Promise((resolve, reject) => {
+            setTimeout(() => {
+                const user = USERS.find(u => u.email.toLowerCase() === String(email).toLowerCase() && u.password === password);
+                if (user) {
+                    resolve({
+                        success: true,
+                        user
+                    });
+                } else {
+                    reject({
+                        success: false,
+                        message: 'Invalid credentials. Please check your email and password.'
+                    });
+                }
+            }, 700);
+        });
+    }
+
+    function setSubmittingState(isSubmitting) {
+        submitBtn.disabled = isSubmitting;
+        const textEl = submitBtn.querySelector('.btn-text');
+        if (isSubmitting) {
+            textEl.innerHTML = '<span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>Logging in...';
+        } else {
+            textEl.textContent = 'Log In';
+        }
+    }
+
+    function showError(message) {
+        authError.textContent = message;
+        authError.classList.remove('d-none');
+    }
+
+    function clearError() {
+        authError.classList.add('d-none');
+        authError.textContent = '';
+    }
+
+    // Basic client-side validation on blur
+    emailInput.addEventListener('blur', () => {
+        if (!isValidEmail(emailInput.value)) {
+            emailInput.classList.add('is-invalid');
+        } else {
+            emailInput.classList.remove('is-invalid');
+        }
+    });
+    passwordInput.addEventListener('blur', () => {
+        if (!passwordInput.value) {
+            passwordInput.classList.add('is-invalid');
+        } else {
+            passwordInput.classList.remove('is-invalid');
+        }
+    });
+
+    // Submit handler
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        clearError();
+
+        const email = emailInput.value.trim();
+        const password = passwordInput.value;
+
+        // Validate
+        let valid = true;
+        if (!isValidEmail(email)) {
+            emailInput.classList.add('is-invalid');
+            valid = false;
+        } else {
+            emailInput.classList.remove('is-invalid');
+        }
+        if (!password) {
+            passwordInput.classList.add('is-invalid');
+            valid = false;
+        } else {
+            passwordInput.classList.remove('is-invalid');
+        }
+        if (!valid) {
+            showError('Please fix the highlighted fields and try again.');
+            return;
+        }
+
+        // Submit
+        setSubmittingState(true);
+        authenticate(email, password)
+            .then(({
+                user
+            }) => {
+                localStorage.setItem('cs_lastUserRole', user.role);
+                localStorage.setItem('cs_lastUserEmail', user.email);
+
+                Swal.fire({
+                    title: 'Welcome, ' + user.role + '!',
+                    text: 'Authentication successful. Redirecting…',
+                    icon: 'success',
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                    confirmButtonText: 'Continue',
+                    confirmButtonColor: '#000'
+                }).then(() => {
+                    window.location.href = user.redirect;
+                });
+            })
+            .catch((err) => {
+                const msg = err && err.message ? err.message : 'Authentication failed.';
+                showError(msg);
+                Swal.fire({
+                    title: 'Login failed',
+                    text: msg,
+                    icon: 'error',
+                    confirmButtonText: 'OK',
+                    confirmButtonColor: '#000'
+                });
+            })
+            .finally(() => {
+                setSubmittingState(false);
+            });
+    });
+
+    // Autofocus email on load
+    setTimeout(() => emailInput?.focus(), 100);
+
+    // Optional: show a welcome toast
+    // showToast('Welcome to CrowShield AI');
+});
+  </script>
+ </body>
+</html>

@@ -1,0 +1,679 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>CrowShield AI — Main Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&display=swap" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" rel="stylesheet">
+<link href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet" crossorigin=""/>
+<link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.min.css" rel="stylesheet"/>
+<link href="style.css" rel="stylesheet"/>
+<link href="main_dashboard.css" rel="stylesheet"/>
+<style>
+/* Minimal necessary styling for demo */
+.cs-sidebar{min-height:100vh;width:240px;background:#000;color:#fff}
+.cs-sidebar .nav-link{color:#fff;border-radius:.5rem}
+.cs-sidebar .nav-link:hover{background:#111;color:#fff}
+.cs-avatar{width:36px;height:36px}
+.metric-card{background:#f8f9fa;padding:1rem;border-radius:.5rem}
+.metric-value{font-size:1.75rem;font-weight:600}
+.badge-soft{padding:.25em .5em;border-radius:.25rem;font-size:.75rem}
+.badge-soft.success{background:#00774E;color:#fff}
+.badge-soft.warning{background:#FFA500;color:#fff}
+.badge-soft.error{background:#CD2026;color:#fff}
+.alert-card{cursor:pointer}
+.status-dot{width:10px;height:10px;border-radius:50%;display:inline-block}
+.status-dot.success{background:#00774E}
+.status-dot.warning{background:#FFA500}
+.status-dot.error{background:#CD2026}
+.map-container{height:400px;position:relative}
+</style>
+</head>
+<body>
+<header class="navbar navbar-expand bg-dark border-bottom border-secondary text-white">
+<div class="container-fluid">
+<button class="btn btn-outline-light me-2" data-bs-toggle="collapse" data-bs-target="#csSidebar"><i class="fa-solid fa-bars"></i></button>
+<a class="navbar-brand d-flex align-items-center gap-2 text-white" href="./alert_details.html">
+<img src="https://data-smith.ai/wp-content/uploads/2025/01/logo_transparent_background.png" style="height:24px" onerror="this.src='https://picsum.photos/seed/crowshield/48/48'"/>
+<span class="fw-bold">CrowShield AI — Responder</span>
+</a>
+<div class="ms-auto d-flex align-items-center gap-2">
+<a class="btn btn-outline-light" href="#map"><i class="fa-solid fa-location-crosshairs me-2"></i>Center on Incident</a>
+<button class="btn btn-link text-white position-relative" id="btnNotif"><i class="fa-solid fa-bell"></i></button>
+<div class="dropdown">
+<button class="btn btn-outline-light dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown"><span class="badge bg-secondary text-dark me-2">FR</span>Responder</button>
+<ul class="dropdown-menu dropdown-menu-end">
+<li><a class="dropdown-item" href="./login_page.html"><i class="fa-solid fa-user me-2"></i>Logout</a></li>
+</ul>
+</div>
+</div>
+</div>
+</header>
+<div class="d-flex">
+<aside class="collapse d-lg-flex flex-column cs-sidebar" id="csSidebar">
+<div class="p-3 d-flex align-items-center border-bottom border-secondary">
+<img src="https://data-smith.ai/wp-content/uploads/2025/01/logo_transparent_background.png" style="height:24px" onerror="this.src='https://picsum.photos/seed/logo/40/24'"/><span class="fw-bold">CrowShield AI</span>
+</div>
+<div class="px-3 py-3 border-bottom border-secondary d-flex align-items-center gap-2">
+<div class="rounded-circle bg-secondary text-dark d-flex align-items-center justify-content-center me-2 cs-avatar">FR</div>
+<div><div class="fw-semibold">First Responder</div><div class="small text-muted">Responder</div></div>
+</div>
+<nav class="nav flex-column px-2 py-2">
+<a class="nav-link" href="./alert_details.html"><i class="fa-solid fa-location-crosshairs me-2"></i>Current Incident</a>
+<a class="nav-link" href="./main_dashboard.html"><i class="fa-solid fa-clipboard-list me-2"></i>All Incidents</a>
+<a class="nav-link" href="#"><i class="fa-solid fa-circle-question me-2"></i>Help</a>
+</nav>
+<div class="mt-auto p-3 text-white-50 small">Stay Safe • Coordinate via Command</div>
+</aside>
+<main class="flex-grow-1 main-panel">
+<div class="container-fluid">
+<nav class="breadcrumb mb-3">
+<span class="breadcrumb-item">Home</span>
+<span class="breadcrumb-item active">Main Dashboard</span>
+<span class="ms-auto small text-muted">Last updated: <span id="lastUpdated">—</span></span>
+</nav>
+<div class="page-header mb-3 d-flex justify-content-between">
+<h1 class="page-title mb-0">Main Dashboard</h1>
+<span class="badge-soft info">Live</span>
+<button class="btn btn-warning" disabled id="btnManualAlert"><i class="fa-solid fa-bullhorn me-2"></i>Manual Alert</button>
+</div>
+<!-- Metrics -->
+<div class="row g-3 mb-4">
+<div class="col-md-4">
+<div class="metric-card">
+<div class="d-flex justify-content-between align-items-center"><div class="metric-title">Total Crowd Count</div><i class="fa-solid fa-people-group text-info"></i></div>
+<div class="metric-value" id="metricCrowd">12,450</div>
+<div class="text-muted small">Updated just now</div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="metric-card">
+<div class="d-flex justify-content-between align-items-center"><div class="metric-title">Active Alerts</div><i class="fa-solid fa-triangle-exclamation text-warning"></i></div>
+<div class="d-flex align-items-end justify-content-between">
+<div class="metric-value" id="metricAlerts">6</div>
+<div class="d-flex gap-2">
+<span class="badge-soft error" id="countHigh">High: 2</span>
+<span class="badge-soft warning" id="countMed">Med: 3</span>
+<span class="badge-soft success" id="countLow">Low: 1</span>
+</div>
+</div>
+<div class="text-muted small">Auto-refreshing</div>
+</div>
+</div>
+<div class="col-md-4">
+<div class="metric-card">
+<div class="d-flex justify-content-between align-items-center"><div class="metric-title">Disaster Risk</div><i class="fa-solid fa-gauge-high text-danger"></i></div>
+<div class="d-flex align-items-center gap-2"><div class="metric-value" id="metricRiskText">Medium</div><span class="badge-soft warning" id="metricRiskBadge">Medium</span></div>
+<div class="text-muted small">From prediction model</div>
+</div>
+</div>
+</div>
+<!-- Map + Alerts -->
+<div class="row g-3">
+<div class="col-xl-8 col-xxl-9">
+<div class="card h-100">
+<div class="card-header d-flex justify-content-between align-items-center">
+<div class="title d-flex align-items-center gap-2"><i class="fa-solid fa-map text-primary"></i><span class="widget-title">Live Map View</span></div>
+<div class="d-flex align-items-center gap-2">
+<div class="view-switcher">
+<div class="option active" id="optHeat">Heatmap</div>
+<div class="option" id="optZones">Zones</div>
+</div>
+<button class="btn btn-light btn-sm" id="btnResetView"><i class="fa-solid fa-rotate me-1"></i>Reset View</button>
+</div>
+</div>
+<div class="card-body p-0"><div class="map-container" id="map"><div class="d-flex h-100 w-100 align-items-center justify-content-center text-muted" id="mapLoader"><div class="spinner-border text-dark me-2"></div>Initializing map…</div></div></div>
+<div class="card-footer d-flex justify-content-between align-items-center">
+<div class="small text-muted">Selected Zone: <span id="selectedZone">None</span></div>
+<div class="d-flex align-items-center gap-2">
+<span class="status-dot success"></span><span class="small">Normal</span>
+<span class="status-dot warning ms-3"></span><span class="small">Watch</span>
+<span class="status-dot error ms-3"></span><span class="small">Alert</span>
+</div>
+</div>
+</div>
+<div class="card mt-3">
+<div class="card-header d-flex justify-content-between align-items-center">
+<div class="title d-flex align-items-center gap-2"><i class="fa-solid fa-chart-line text-primary"></i><span class="widget-title">Crowd Trend (Last 10 min)</span></div>
+<div class="text-muted small">Pan/hover to inspect values</div>
+</div>
+<div class="card-body"><canvas id="crowdTrendChart" height="120"></canvas></div>
+</div>
+</div>
+<div class="col-xl-4 col-xxl-3">
+<div class="card h-100 alerts-panel position-sticky">
+<div class="card-header d-flex justify-content-between align-items-center">
+<div class="d-flex align-items-center gap-2"><i class="fa-solid fa-bell text-danger"></i><span class="widget-title">Active Alerts</span></div>
+<div class="d-flex align-items-center gap-2">
+<select class="form-select form-select-sm" id="filterSeverity"><option selected value="All">All Severities</option><option value="High">High</option><option value="Medium">Medium</option><option value="Low">Low</option></select>
+<select class="form-select form-select-sm" id="sortBy"><option selected value="time_desc">Newest</option><option value="time_asc">Oldest</option><option value="sev_desc">Severity (High→Low)</option><option value="sev_asc">Severity (Low→High)</option></select>
+</div>
+</div>
+<div class="card-body p-0"><div class="list-group list-group-flush alerts-list" id="alertsList"></div></div>
+<div class="card-footer d-flex justify-content-between align-items-center">
+<div class="small text-muted">Showing <span id="alertsShowing">0</span> of <span id="alertsTotal">0</span></div>
+<div class="pagination small"><span class="text-muted" id="paginationInfo">Page 1 of 1</span></div>
+</div>
+</div>
+</div>
+</div>
+<div class="position-fixed top-0 end-0 p-3" style="z-index:1080"><div class="toast-container" id="toastContainer"></div></div>
+</div>
+</main>
+</div>
+<footer class="bg-dark border-top border-secondary text-white-50 small py-2 mt-3">
+<div class="container-fluid d-flex justify-content-between align-items-center">
+<div class="d-flex align-items-center gap-2"><img src="https://data-smith.ai/wp-content/uploads/2025/01/logo_transparent_background.png" style="height:18px" onerror="this.src='https://picsum.photos/seed/footer/36/18'"/>CrowShield AI Responder</div>
+<div class="d-none d-md-flex gap-3">
+<a class="link-light text-decoration-none" href="#map"><i class="fa-solid fa-location-crosshairs me-1"></i>Center</a>
+<a class="link-light text-decoration-none" href="#" id="footerAcknowledge"><i class="fa-solid fa-check me-1"></i>Acknowledge</a>
+</div>
+<div class="d-flex gap-3"><a class="link-light text-decoration-none" href="#">Terms</a><a class="link-light text-decoration-none" href="#">Privacy</a></div>
+</div>
+</footer>
+  <!-- Scripts -->
+  <script crossorigin="anonymous" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <script crossorigin="" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js">
+  </script>
+  <script src="https://unpkg.com/leaflet.heat/dist/leaflet-heat.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.3/dist/chart.umd.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.12.4/dist/sweetalert2.all.min.js">
+  </script>
+  <script>
+   // Tooltips
+const tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'))
+tooltipTriggerList.map(function(tooltipTriggerEl) {
+    return new bootstrap.Tooltip(tooltipTriggerEl)
+})
+
+const lastUpdatedEl = document.getElementById('lastUpdated');
+const fmtTime = (d) => d.toLocaleTimeString([], {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit'
+});
+const setLastUpdated = () => {
+    lastUpdatedEl.textContent = fmtTime(new Date());
+}
+
+// Map Initialization
+let map, heatLayer, zonesLayer;
+const mapCenter = [40.7505, -73.9934]; // e.g., Midtown Manhattan
+
+function initMap() {
+    map = L.map('map', {
+        zoomControl: true
+    }).setView(mapCenter, 14);
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
+
+    // Heatmap placeholder
+    heatLayer = L.heatLayer([], {
+        radius: 22,
+        blur: 16,
+        maxZoom: 18,
+        max: 1.0,
+        minOpacity: 0.3
+    }).addTo(map);
+
+    // Zones layer group
+    zonesLayer = L.layerGroup().addTo(map);
+
+    document.getElementById('mapLoader')?.classList.add('visually-hidden');
+    setLastUpdated();
+}
+
+// Generate random heatmap points within bounding box
+function randomHeatPoints(center, count = 150) {
+    const [lat, lng] = center;
+    const pts = [];
+    for (let i = 0; i < count; i++) {
+        const latOff = (Math.random() - 0.5) * 0.02; // ~2km box
+        const lngOff = (Math.random() - 0.5) * 0.02;
+        const intensity = Math.random();
+        pts.push([lat + latOff, lng + lngOff, intensity]);
+    }
+    return pts;
+}
+
+// Zones sample data
+const zoneData = [{
+    id: 'Z-101',
+    name: 'Main Stage',
+    status: 'Alert',
+    coords: [
+        [40.752, -73.992],
+        [40.753, -73.99],
+        [40.751, -73.988],
+        [40.75, -73.991]
+    ]
+}, {
+    id: 'Z-102',
+    name: 'Gate A',
+    status: 'Watch',
+    coords: [
+        [40.748, -73.997],
+        [40.749, -73.995],
+        [40.7475, -73.994]
+    ]
+}, {
+    id: 'Z-103',
+    name: 'Food Court',
+    status: 'Normal',
+    coords: [
+        [40.751, -73.997],
+        [40.752, -73.996],
+        [40.751, -73.994],
+        [40.75, -73.995]
+    ]
+}];
+
+function statusStyle(status) {
+    if (status === 'Alert') return {
+        color: '#CD2026',
+        weight: 3,
+        fillColor: '#CD2026',
+        fillOpacity: 0.15
+    };
+    if (status === 'Watch') return {
+        color: '#FFA500',
+        weight: 3,
+        fillColor: '#FFA500',
+        fillOpacity: 0.15
+    };
+    return {
+        color: '#00774E',
+        weight: 3,
+        fillColor: '#00774E',
+        fillOpacity: 0.12
+    };
+}
+
+function renderZones() {
+    zonesLayer.clearLayers();
+    zoneData.forEach(z => {
+        const poly = L.polygon(z.coords, statusStyle(z.status));
+        poly.bindTooltip(`${z.name} • ${z.status}`);
+        poly.on('click', () => onZoneClick(z));
+        poly.on('mouseover', () => document.getElementById('selectedZone').textContent = z.name);
+        poly.on('mouseout', () => document.getElementById('selectedZone').textContent = 'None');
+        zonesLayer.addLayer(poly);
+    });
+}
+
+function onZoneClick(zone) {
+    map.fitBounds(L.polygon(zone.coords).getBounds(), {
+        padding: [20, 20]
+    });
+    document.getElementById('selectedZone').textContent = zone.name;
+    Swal.fire({
+        icon: zone.status === 'Alert' ? 'warning' : (zone.status === 'Watch' ? 'info' : 'success'),
+        title: zone.name,
+        html: `<div class="text-start">` +
+            `<div><strong>Zone ID:</strong> ${zone.id}</div>` +
+            `<div><strong>Status:</strong> ${zone.status}</div>` +
+            `<div><strong>Current Crowd:</strong> ${Math.floor(200 + Math.random()*1200).toLocaleString()}</div>` +
+            `<div class="mt-2 small text-muted">Click 'Details' to view incident specifics.</div>` +
+            `</div>`,
+        showCancelButton: true,
+        confirmButtonText: 'Details',
+        cancelButtonText: 'Close'
+    }).then(r => {
+        if (r.isConfirmed) {
+            window.location.href = './alert_details.html';
+        }
+    });
+}
+
+// Toggle overlays
+const optHeat = document.getElementById('optHeat');
+const optZones = document.getElementById('optZones');
+
+function setActiveOption(el) {
+    [optHeat, optZones].forEach(o => o.classList.remove('active'));
+    el.classList.add('active');
+}
+
+// Alerts Data & Rendering
+let alerts = [{
+    id: 'A-9021',
+    severity: 'High',
+    type: 'Overcrowding',
+    message: 'Critical density at Main Stage.',
+    zone: 'Main Stage',
+    timestamp: Date.now() - 2 * 60 * 1000,
+    acknowledged: false,
+    latlng: [40.752, -73.991]
+}, {
+    id: 'A-9022',
+    severity: 'Medium',
+    type: 'Bottleneck',
+    message: 'Queue forming at Gate A.',
+    zone: 'Gate A',
+    timestamp: Date.now() - 5 * 60 * 1000,
+    acknowledged: false,
+    latlng: [40.7485, -73.996]
+}, {
+    id: 'A-9023',
+    severity: 'Low',
+    type: 'Lost Person',
+    message: 'Assistance requested near Food Court.',
+    zone: 'Food Court',
+    timestamp: Date.now() - 9 * 60 * 1000,
+    acknowledged: true,
+    latlng: [40.7515, -73.995]
+}, {
+    id: 'A-9024',
+    severity: 'Medium',
+    type: 'Medical',
+    message: 'Minor injury reported near East Corridor.',
+    zone: 'East Corridor',
+    timestamp: Date.now() - 1 * 60 * 1000,
+    acknowledged: false,
+    latlng: [40.749, -73.99]
+}, {
+    id: 'A-9025',
+    severity: 'High',
+    type: 'Security',
+    message: 'Unauthorized access detected at Backstage.',
+    zone: 'Backstage',
+    timestamp: Date.now() - 30 * 1000,
+    acknowledged: false,
+    latlng: [40.753, -73.989]
+}, {
+    id: 'A-9026',
+    severity: 'Medium',
+    type: 'Exit Flow',
+    message: 'Slow exit at North Gate.',
+    zone: 'North Gate',
+    timestamp: Date.now() - 7 * 60 * 1000,
+    acknowledged: false,
+    latlng: [40.754, -73.997]
+}];
+
+function sevOrder(sev) {
+    return sev === 'High' ? 3 : sev === 'Medium' ? 2 : 1;
+}
+
+function renderAlerts() {
+    const list = document.getElementById('alertsList');
+    const filter = document.getElementById('filterSeverity').value;
+    const sortBy = document.getElementById('sortBy').value;
+    let filtered = alerts.slice();
+    if (filter !== 'All') filtered = filtered.filter(a => a.severity === filter);
+    filtered.sort((a, b) => {
+        switch (sortBy) {
+            case 'time_asc':
+                return a.timestamp - b.timestamp;
+            case 'sev_desc':
+                return sevOrder(b.severity) - sevOrder(a.severity);
+            case 'sev_asc':
+                return sevOrder(a.severity) - sevOrder(b.severity);
+            case 'time_desc':
+            default:
+                return b.timestamp - a.timestamp;
+        }
+    });
+
+    list.innerHTML = '';
+    filtered.forEach(alert => {
+        const item = document.createElement('div');
+        item.className = 'list-group-item alert-card py-3';
+        item.setAttribute('data-severity', alert.severity);
+        if (alert.acknowledged) item.classList.add('ack');
+        item.innerHTML = `
+          <div class="d-flex justify-content-between align-items-start">
+            <div class="me-2">
+              <div class="d-flex align-items-center gap-2">
+                <span class="badge severity-badge">${alert.severity}</span>
+                <strong>${alert.type}</strong>
+              </div>
+              <div class="small text-muted mt-1">${alert.message}</div>
+              <div class="small mt-1"><i class="fa-solid fa-location-dot me-1 text-muted"></i>${alert.zone}</div>
+              <div class="small text-muted">${new Date(alert.timestamp).toLocaleString()}</div>
+            </div>
+            <div class="d-flex flex-column align-items-end gap-2">
+              <button class="btn btn-sm btn-primary btn-focus-map"><i class="fa-solid fa-location-crosshairs me-1"></i>Focus</button>
+              <button class="btn btn-sm btn-success btn-ack" ${alert.acknowledged ? 'disabled' : ''}><i class="fa-solid fa-check me-1"></i>${alert.acknowledged ? 'Acknowledged' : 'Acknowledge'}</button>
+            </div>
+          </div>`;
+
+        // click handlers
+        item.querySelector('.btn-focus-map').addEventListener('click', () => {
+            if (alert.latlng) {
+                map.setView(alert.latlng, 17);
+                L.popup()
+                    .setLatLng(alert.latlng)
+                    .setContent(`<strong>${alert.type}</strong><br>${alert.message}<br><span class='small text-muted'>${alert.zone}</span>`)
+                    .openOn(map);
+            }
+        });
+        item.querySelector('.btn-ack').addEventListener('click', () => acknowledgeAlert(alert.id));
+
+        // Click on card navigates to details
+        item.addEventListener('click', (e) => {
+            if (e.target.closest('button')) return; // ignore clicks on buttons
+            window.location.href = './alert_details.html';
+        });
+
+        list.appendChild(item);
+    });
+
+    // counts
+    document.getElementById('alertsTotal').textContent = alerts.length;
+    document.getElementById('alertsShowing').textContent = filtered.length;
+
+    const high = alerts.filter(a => a.severity === 'High' && !a.acknowledged).length;
+    const med = alerts.filter(a => a.severity === 'Medium' && !a.acknowledged).length;
+    const low = alerts.filter(a => a.severity === 'Low' && !a.acknowledged).length;
+    document.getElementById('countHigh').textContent = `High: ${high}`;
+    document.getElementById('countMed').textContent = `Med: ${med}`;
+    document.getElementById('countLow').textContent = `Low: ${low}`;
+    document.getElementById('metricAlerts').textContent = (high + med + low).toString();
+
+    setLastUpdated();
+}
+
+function acknowledgeAlert(id) {
+    const idx = alerts.findIndex(a => a.id === id);
+    if (idx > -1) {
+        alerts[idx].acknowledged = true;
+        renderAlerts();
+        showToast('Alert acknowledged', `${alerts[idx].type} at ${alerts[idx].zone} marked as acknowledged.`)
+    }
+}
+
+// Toast helper
+function showToast(title, msg) {
+    const container = document.getElementById('toastContainer');
+    const toastId = 't' + Math.random().toString(36).slice(2);
+    const toast = document.createElement('div');
+    toast.className = 'toast align-items-center text-bg-dark border-0';
+    toast.id = toastId;
+    toast.role = 'status';
+    toast.ariaLive = 'polite';
+    toast.innerHTML = `
+        <div class="d-flex">
+          <div class="toast-body">
+            <strong>${title}:</strong> ${msg}
+          </div>
+          <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>`;
+    container.appendChild(toast);
+    const t = new bootstrap.Toast(toast, {
+        delay: 3000
+    });
+    t.show();
+}
+
+// Footer acknowledge shortcut -> acknowledge most recent unacknowledged alert
+document.getElementById('footerAcknowledge').addEventListener('click', (e) => {
+    e.preventDefault();
+    const a = alerts.find(x => !x.acknowledged);
+    if (a) acknowledgeAlert(a.id);
+    else showToast('No pending alerts', 'All alerts are acknowledged.');
+});
+
+// Crowd Trend Chart
+let trendChart;
+
+function initChart() {
+    const ctx = document.getElementById('crowdTrendChart');
+    const now = Date.now();
+    const labels = Array.from({
+        length: 10
+    }, (_, i) => new Date(now - (9 - i) * 60 * 1000).toLocaleTimeString([], {
+        hour: '2-digit',
+        minute: '2-digit'
+    }));
+    const base = 12000;
+    const data = Array.from({
+        length: 10
+    }, () => base + Math.round((Math.random() - 0.5) * 1200));
+    trendChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels,
+            datasets: [{
+                label: 'Crowd',
+                data,
+                borderColor: '#0099D2',
+                backgroundColor: 'rgba(0,153,210,0.15)',
+                tension: 0.35,
+                fill: true,
+                pointRadius: 2
+            }]
+        },
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            scales: {
+                y: {
+                    beginAtZero: false
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false
+                }
+            }
+        }
+    });
+}
+
+function updateCrowdMetric() {
+    const val = 12000 + Math.round((Math.random() - 0.4) * 1800);
+    document.getElementById('metricCrowd').textContent = val.toLocaleString();
+    if (trendChart) {
+        const nowLbl = new Date().toLocaleTimeString([], {
+            hour: '2-digit',
+            minute: '2-digit'
+        });
+        trendChart.data.labels.push(nowLbl);
+        trendChart.data.labels.shift();
+        trendChart.data.datasets[0].data.push(val);
+        trendChart.data.datasets[0].data.shift();
+        trendChart.update('none');
+    }
+    setLastUpdated();
+}
+
+function updateRisk() {
+    // Simulate risk change
+    const levels = ['Low', 'Medium', 'High'];
+    const weights = [0.4, 0.4, 0.2];
+    const r = Math.random();
+    let pick = 0,
+        cum = 0;
+    for (let i = 0; i < weights.length; i++) {
+        cum += weights[i];
+        if (r < cum) {
+            pick = i;
+            break;
+        }
+    }
+    const level = levels[pick];
+    const textEl = document.getElementById('metricRiskText');
+    const badge = document.getElementById('metricRiskBadge');
+    textEl.textContent = level;
+    badge.textContent = level;
+    badge.className = 'badge-soft ' + (level === 'High' ? 'error' : level === 'Medium' ? 'warning' : 'success');
+    setLastUpdated();
+}
+
+// Simulate new alerts arriving periodically
+function simulateIncomingAlert() {
+    const sevPool = ['Low', 'Medium', 'High'];
+    const types = {
+        Low: ['Lost Person', 'Info'],
+        Medium: ['Bottleneck', 'Exit Flow'],
+        High: ['Security', 'Overcrowding', 'Medical']
+    };
+    const sev = sevPool[Math.floor(Math.random() * sevPool.length)];
+    const tarr = types[sev];
+    const t = tarr[Math.floor(Math.random() * tarr.length)];
+    const id = 'A-' + Math.floor(9000 + Math.random() * 9000);
+    const zone = ['Main Stage', 'Gate A', 'Food Court', 'North Gate', 'Backstage'][Math.floor(Math.random() * 5)];
+    const msg = (sev === 'High' ? 'Immediate attention: ' : '') + t + ' reported at ' + zone + '.';
+    const latlng = [mapCenter[0] + (Math.random() - 0.5) * 0.01, mapCenter[1] + (Math.random() - 0.5) * 0.01];
+    const newAlert = {
+        id,
+        severity: sev,
+        type: t,
+        message: msg,
+        zone,
+        timestamp: Date.now(),
+        acknowledged: false,
+        latlng
+    };
+    alerts.unshift(newAlert);
+    renderAlerts();
+    showToast('New Alert', `${sev}: ${t} at ${zone}`);
+}
+
+// UI Controls
+document.getElementById('btnResetView').addEventListener('click', () => map.setView(mapCenter, 14));
+document.getElementById('optHeat').addEventListener('click', () => {
+    setActiveOption(optHeat);
+    heatLayer.addTo(map);
+    zonesLayer.remove();
+});
+document.getElementById('optZones').addEventListener('click', () => {
+    setActiveOption(optZones);
+    zonesLayer.addTo(map);
+    heatLayer.remove();
+});
+
+document.getElementById('filterSeverity').addEventListener('change', renderAlerts);
+document.getElementById('sortBy').addEventListener('change', renderAlerts);
+
+document.getElementById('btnNotif').addEventListener('click', () => showToast('Notifications', 'You have recent system updates.'));
+
+// Initialize everything after DOM ready
+window.addEventListener('load', () => {
+    initMap();
+    renderZones();
+    heatLayer.setLatLngs(randomHeatPoints(mapCenter, 180));
+    setInterval(() => heatLayer.setLatLngs(randomHeatPoints(mapCenter, 180)), 2500);
+
+    initChart();
+    renderAlerts();
+
+    setInterval(updateCrowdMetric, 60000); // every minute
+    setInterval(updateRisk, 120000); // every 2 minutes
+    setInterval(simulateIncomingAlert, 20000); // every 20 seconds
+});
+  </script>
+ </body>
+</html>

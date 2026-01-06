@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+   CrowShield AI — Reports &amp; Historical Analysis
+  </title>
+  <!-- Google Font: Poppins -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@100;300;400;500;600;700&amp;display=swap" rel="stylesheet"/>
+  <!-- Bootstrap 5 CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"/>
+  <!-- Font Awesome 6 -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" rel="stylesheet"/>
+  <!-- SweetAlert2 -->
+  <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.min.css" rel="stylesheet"/>
+  <!-- Flatpickr -->
+  <link href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css" rel="stylesheet"/>
+  <!-- Choices.js -->
+  <link href="https://cdn.jsdelivr.net/npm/choices.js@10.2.0/public/assets/styles/choices.min.css" rel="stylesheet"/>
+  <!-- Leaflet CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css" rel="stylesheet"/>
+  <!-- Global site theme -->
+  <link href="style.css" rel="stylesheet"/>
+  <!-- Page-specific CSS -->
+  <link href="reports_page.css" rel="stylesheet"/>
+ </head>
+ <body>
+  <!-- Header (Included on Reports Page) -->
+  <header class="navbar navbar-expand bg-dark border-bottom border-secondary text-white">
+   <div class="container-fluid">
+    <button aria-controls="csSidebar" aria-expanded="false" aria-label="Toggle sidebar" class="btn btn-outline-light d-lg-none me-2" data-bs-target="#csSidebar" data-bs-toggle="collapse" type="button">
+     <i class="fa-solid fa-bars">
+     </i>
+    </button>
+    <a class="navbar-brand d-flex align-items-center gap-2 text-white" href="./main_dashboard.html">
+     <img alt="CrowShield AI" onerror="this.onerror=null;this.src='https://picsum.photos/seed/crowshield/40/40?grayscale'" src="https://data-smith.ai/wp-content/uploads/2025/01/logo_transparent_background.png" style="height:28px;"/>
+     <span class="fw-bold">
+      CrowShield AI — Coordinator
+     </span>
+    </a>
+    <form class="d-none d-md-flex ms-auto me-3" role="search" style="max-width:360px;">
+     <div class="input-group">
+      <span class="input-group-text bg-secondary text-dark border-0">
+       <i class="fa-solid fa-magnifying-glass">
+       </i>
+      </span>
+      <input aria-label="Search" class="form-control" placeholder="Search zones or reports..." type="search"/>
+     </div>
+    </form>
+    <div class="d-flex align-items-center gap-2">
+     <a class="btn btn-outline-light d-none d-sm-inline-flex" href="./reports_page.html">
+      <i class="fa-solid fa-chart-line me-2">
+      </i>
+      Open Reports
+     </a>
+     <button class="btn btn-link text-white position-relative" type="button">
+      <i class="fa-solid fa-bell">
+      </i>
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+       1
+      </span>
+     </button>
+     <button class="btn btn-link text-white" type="button">
+      <i class="fa-solid fa-envelope">
+      </i>
+     </button>
+     <div class="dropdown">
+      <button aria-expanded="false" class="btn btn-outline-light dropdown-toggle d-flex align-items-center" data-bs-toggle="dropdown">
+       <span class="badge bg-secondary text-dark me-2">
+        EC
+       </span>
+       Coordinator
+      </button>
+      <ul class="dropdown-menu dropdown-menu-end">
+       <li>
+        <a class="dropdown-item" href="./login_page.html">
+         <i class="fa-solid fa-user me-2">
+         </i>
+         Logout
+        </a>
+       </li>
+      </ul>
+     </div>
+    </div>
+   </div>
+  </header>
+  <!-- Page layout wrapper: Sidebar + Main content -->
+  <div class="d-lg-flex">
+   <!-- Sidebar (Included on Reports Page) -->
+   <aside class="collapse d-lg-flex flex-column cs-sidebar" id="csSidebar">
+    <div class="p-3 d-flex align-items-center border-bottom border-secondary">
+     <img alt="CrowShield" class="me-2" onerror="this.onerror=null;this.src='https://picsum.photos/seed/crowshield/40/40?grayscale'" src="https://data-smith.ai/wp-content/uploads/2025/01/logo_transparent_background.png" style="height:28px"/>
+     <span class="fw-bold">
+      CrowShield AI
+     </span>
+    </div>
+    <div class="px-3 py-3 border-bottom border-secondary">
+     <div class="d-flex align-items-center">
+      <div class="rounded-circle bg-secondary text-dark d-flex align-items-center justify-content-center me-2 cs-avatar">
+       EC
+      </div>
+      <div>
+       <div class="fw-semibold">
+        Event Coordinator
+       </div>
+       <div class="small text-muted">
+        Coordinator
+       </div>
+      </div>
+     </div>
+    </div>
+    <nav class="nav flex-column px-2 py-2">
+     <a aria-expanded="true" class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#coordMonitoring">
+      <span>
+       <i class="fa-solid fa-chart-line me-2">
+       </i>
+       Monitoring
+      </span>
+      <i class="fa-solid fa-angle-down">
+      </i>
+     </a>
+     <div class="collapse show cs-submenu" id="coordMonitoring">
+      <a class="nav-link" href="./main_dashboard.html">
+       <i class="fa-solid fa-map-location-dot me-2">
+       </i>
+       Dashboard
+      </a>
+      <a class="nav-link" href="./alert_details.html">
+       <i class="fa-solid fa-clipboard-list me-2">
+       </i>
+       Alert Details (View)
+      </a>
+     </div>
+     <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#coordAnalytics">
+      <span>
+       <i class="fa-solid fa-fire me-2">
+       </i>
+       Analytics
+      </span>
+      <i class="fa-solid fa-angle-down">
+      </i>
+     </a>
+     <div class="collapse cs-submenu" id="coordAnalytics">
+      <a class="nav-link" href="./reports_page.html#heatmap">
+       <i class="fa-solid fa-fire me-2">
+       </i>
+       Historical Heatmap
+      </a>
+      <a class="nav-link active" href="./reports_page.html">
+       <i class="fa-solid fa-clipboard-list me-2">
+       </i>
+       Alert Log
+      </a>
+     </div>
+     <a class="nav-link" href="#">
+      <i class="fa-solid fa-circle-question me-2">
+      </i>
+      Help
+     </a>
+    </nav>
+    <div class="mt-auto p-3">
+     <div class="text-white-50 small">
+      View-only access. For manual alerts, contact Security/Admin.
+     </div>
+    </div>
+   </aside>
+   <!-- Main Content -->
+   <main class="flex-grow-1 main-content">
+    <!-- Page Header -->
+    <div class="container-fluid">
+     <div class="page-header">
+      <div class="d-flex flex-column">
+       <h1 class="page-title mb-1">
+        Reports &amp; Historical Analysis
+       </h1>
+       <div class="text-muted">
+        Filter, export, and visualize historical crowd data and alerts.
+       </div>
+      </div>
+      <nav aria-label="breadcrumb" class="breadcrumb">
+       <span class="breadcrumb-item">
+        <a href="./main_dashboard.html">
+         Dashboard
+        </a>
+       </span>
+       <span aria-current="page" class="breadcrumb-item active">
+        Reports
+       </span>
+      </nav>
+     </div>
+    </div>
+    <!-- Persistent Filter Bar -->
+    <div class="filters-bar border-bottom">
+     <div class="container-fluid py-3">
+      <form class="row g-3 align-items-end" id="reportFiltersForm">
+       <!-- Date Range -->
+       <div class="col-12 col-md-4 col-lg-3">
+        <label class="form-label" for="startDate">
+         From
+        </label>
+        <div class="input-group">
+         <span class="input-group-text bg-secondary text-dark border-0">
+          <i class="fa-regular fa-calendar">
+          </i>
+         </span>
+         <input aria-label="Start date" class="form-control" id="startDate" placeholder="Start date &amp; time" type="text"/>
+        </div>
+       </div>
+       <div class="col-12 col-md-4 col-lg-3">
+        <label class="form-label" for="endDate">
+         To
+        </label>
+        <div class="input-group">
+         <span class="input-group-text bg-secondary text-dark border-0">
+          <i class="fa-regular fa-calendar">
+          </i>
+         </span>
+         <input aria-label="End date" class="form-control" id="endDate" placeholder="End date &amp; time" type="text"/>
+        </div>
+       </div>
+       <!-- Zones -->
+       <div class="col-12 col-md-4 col-lg-3">
+        <label class="form-label" for="zoneSelect">
+         Zones
+        </label>
+        <select aria-label="Select Zones" class="form-select" id="zoneSelect" multiple="">
+         <!-- Populated by JS; includes 'All Zones' -->
+        </select>
+        <div class="form-text">
+         Tip: Choose 'All Zones' to include every zone.
+        </div>
+       </div>
+       <!-- Severity -->
+       <div class="col-12 col-md-8 col-lg-2">
+        <label class="form-label" for="severitySelect">
+         Severity
+        </label>
+        <select aria-label="Select Severity" class="form-select" id="severitySelect" multiple="">
+         <option selected="" value="High">
+          High
+         </option>
+         <option selected="" value="Medium">
+          Medium
+         </option>
+         <option selected="" value="Low">
+          Low
+         </option>
+        </select>
+       </div>
+       <!-- Actions -->
+       <div class="col-12 col-md-4 col-lg-1 d-grid d-md-block">
+        <button class="btn btn-primary w-100" disabled="" id="applyFiltersBtn" type="button">
+         <i class="fa-solid fa-filter me-1">
+         </i>
+         Apply
+        </button>
+        <button class="btn btn-light w-100 mt-2 mt-md-0 ms-md-2" id="resetFiltersBtn" type="button">
+         <i class="fa-solid fa-rotate-left me-1">
+         </i>
+         Reset
+        </button>
+       </div>
+      </form>
+     </div>
+    </div>
+    <!-- Toasts Container -->
+    <div class="position-fixed top-0 end-0 p-3" style="z-index: 1080">
+     <div class="toast-container" id="appToasts">
+     </div>
+    </div>
+    <!-- Tabbed Content -->
+    <div class="container-fluid pt-3">
+     <ul class="nav nav-tabs" id="reportsTab" role="tablist">
+      <li class="nav-item" role="presentation">
+       <button aria-controls="alertsPane" aria-selected="true" class="nav-link active" data-bs-target="#alertsPane" data-bs-toggle="tab" id="alerts-tab" role="tab" type="button">
+        <i class="fa-solid fa-table-list me-1">
+        </i>
+        Alert Log
+       </button>
+      </li>
+      <li class="nav-item" role="presentation">
+       <button aria-controls="heatmapPane" aria-selected="false" class="nav-link" data-bs-target="#heatmapPane" data-bs-toggle="tab" id="heatmap-tab" role="tab" type="button">
+        <i class="fa-solid fa-fire me-1">
+        </i>
+        <span id="heatmap">
+         Historical Heatmap
+        </span>
+       </button>
+      </li>
+     </ul>
+     <div class="tab-content" id="reportsTabContent">
+      <!-- Alerts Pane -->
+      <div aria-labelledby="alerts-tab" class="tab-pane fade show active" id="alertsPane" role="tabpanel" tabindex="0">
+       <div class="card mt-3">
+        <div class="card-header">
+         <div class="d-flex align-items-center justify-content-between w-100">
+          <div class="d-flex align-items-center gap-2">
+           <span class="widget-title">
+            Alerts Matching Filters
+           </span>
+           <span class="badge-soft info" id="alertsCountBadge">
+            Loading...
+           </span>
+          </div>
+          <div class="d-flex align-items-center gap-2">
+           <button class="btn btn-outline-primary" disabled="" id="exportCsvBtn" type="button">
+            <i class="fa-solid fa-file-arrow-down me-1">
+            </i>
+            Export as CSV
+           </button>
+          </div>
+         </div>
+        </div>
+        <div class="card-body p-0 position-relative">
+         <!-- Loading overlay -->
+         <div class="loading-overlay d-none" id="alertsLoading">
+          <div aria-label="Loading" class="spinner-border text-dark" role="status">
+          </div>
+         </div>
+         <!-- Skeleton while loading -->
+         <div class="p-3" id="alertsSkeleton">
+          <div class="skeleton mb-2" style="height: 20px;">
+          </div>
+          <div class="skeleton mb-2" style="height: 20px;">
+          </div>
+          <div class="skeleton mb-2" style="height: 20px;">
+          </div>
+          <div class="skeleton mb-2" style="height: 20px;">
+          </div>
+          <div class="skeleton" style="height: 20px;">
+          </div>
+         </div>
+         <div class="table-responsive d-none" id="alertsTableWrap">
+          <table class="table table-theme mb-0" id="alertsTable">
+           <thead>
+            <tr>
+             <th data-sort="timestamp" role="button">
+              Timestamp
+              <i class="fa-solid fa-sort ms-1 text-muted">
+              </i>
+             </th>
+             <th data-sort="zone" role="button">
+              Zone
+              <i class="fa-solid fa-sort ms-1 text-muted">
+              </i>
+             </th>
+             <th data-sort="type" role="button">
+              Type
+              <i class="fa-solid fa-sort ms-1 text-muted">
+              </i>
+             </th>
+             <th data-sort="severity" role="button">
+              Severity
+              <i class="fa-solid fa-sort ms-1 text-muted">
+              </i>
+             </th>
+             <th>
+              Details
+             </th>
+             <th class="text-end">
+              Action
+             </th>
+            </tr>
+           </thead>
+           <tbody id="alertsTbody">
+            <!-- Rows populated by JS -->
+           </tbody>
+          </table>
+         </div>
+        </div>
+        <div class="card-footer d-flex flex-wrap align-items-center justify-content-between gap-2">
+         <div class="text-muted" id="paginationInfo">
+          —
+         </div>
+         <nav aria-label="Alerts pagination">
+          <ul class="pagination mb-0" id="alertsPagination">
+           <!-- Pagination items JS -->
+          </ul>
+         </nav>
+        </div>
+       </div>
+      </div>
+      <!-- Heatmap Pane -->
+      <div aria-labelledby="heatmap-tab" class="tab-pane fade" id="heatmapPane" role="tabpanel" tabindex="0">
+       <div class="card mt-3">
+        <div class="card-header d-flex justify-content-between align-items-center">
+         <span class="widget-title">
+          Historical Crowd Density
+         </span>
+         <div class="small text-muted">
+          Pan/Zoom the map. Click a zone to highlight.
+         </div>
+        </div>
+        <div class="card-body position-relative p-0">
+         <!-- Loading overlay -->
+         <div class="loading-overlay d-none" id="mapLoading">
+          <div aria-label="Loading" class="spinner-border text-dark" role="status">
+          </div>
+         </div>
+         <div aria-label="Historical Heatmap Map" class="map-container" id="heatmapMap">
+         </div>
+         <div class="map-legend card bg-light border position-absolute p-2 small">
+          <div class="fw-semibold">
+           Density
+          </div>
+          <div aria-hidden="true" class="gradient-bar my-1">
+          </div>
+          <div class="d-flex justify-content-between">
+           <span>
+            Low
+           </span>
+           <span>
+            High
+           </span>
+          </div>
+         </div>
+        </div>
+        <div class="card-footer">
+         <div class="text-muted small" id="heatmapStatus">
+          Use filters above and click "Apply" to refresh the heatmap.
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </main>
+  </div>
+  <!-- Footer (Included on Reports Page) -->
+  <footer class="bg-dark border-top border-secondary text-white-50 small py-2 mt-3">
+   <div class="container-fluid d-flex justify-content-between align-items-center">
+    <div class="d-flex align-items-center gap-2">
+     <img alt="CrowShield AI" onerror="this.onerror=null;this.src='https://picsum.photos/seed/crowshield/36/36?grayscale'" src="https://data-smith.ai/wp-content/uploads/2025/01/logo_transparent_background.png" style="height:20px;"/>
+     <span>
+      CrowShield AI Coordinator
+     </span>
+    </div>
+    <div class="d-none d-md-flex gap-3">
+     <a class="link-light text-decoration-none" href="./reports_page.html">
+      <i class="fa-solid fa-clipboard-list me-1">
+      </i>
+      Reports
+     </a>
+     <a class="link-light text-decoration-none" href="./reports_page.html#heatmap">
+      <i class="fa-solid fa-fire me-1">
+      </i>
+      Heatmap
+     </a>
+    </div>
+    <div class="d-flex gap-3">
+     <a class="link-light text-decoration-none" href="#">
+      Terms
+     </a>
+     <a class="link-light text-decoration-none" href="#">
+      Privacy
+     </a>
+    </div>
+   </div>
+  </footer>
+  <!-- Dependencies: Bootstrap JS, SweetAlert2, Flatpickr, Choices.js, Leaflet, Leaflet.heat -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.10.8/dist/sweetalert2.all.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/choices.js@10.2.0/public/assets/scripts/choices.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/leaflet.heat@0.2.0/dist/leaflet-heat.js">
+  </script>
+  <script>
+   // Sample Zones and Data ----------------------------------------------------
+const availableZones = [{
+    id: 'zone-1',
+    name: 'Main Stage'
+}, {
+    id: 'zone-2',
+    name: 'North Gate'
+}, {
+    id: 'zone-3',
+    name: 'Food Court'
+}, {
+    id: 'zone-4',
+    name: 'East Exit'
+}, {
+    id: 'zone-5',
+    name: 'Parking Lot'
+}];
+
+const alertTypes = ['Overcrowding', 'Bottleneck', 'Abnormal Movement', 'Unauthorized Access', 'Medical Incident'];
+
+// Generate mock alerts in last 48 hours
+function randomFrom(arr) {
+    return arr[Math.floor(Math.random() * arr.length)];
+}
+
+function pad(n) {
+    return n < 10 ? '0' + n : n;
+}
+const severities = ['High', 'Medium', 'Low'];
+
+function generateMockAlerts(count = 36) {
+    const now = new Date();
+    const alerts = [];
+    for (let i = 0; i < count; i++) {
+        const hoursAgo = Math.floor(Math.random() * 48); // 0-47
+        const minutesAgo = Math.floor(Math.random() * 60);
+        const ts = new Date(now.getTime() - ((hoursAgo * 60 + minutesAgo) * 60 * 1000));
+        const zone = randomFrom(availableZones);
+        const type = randomFrom(alertTypes);
+        const severity = randomFrom(severities);
+        const id = 'AL' + (1000 + i);
+        const details = `${type} detected near ${zone.name}.`;
+        alerts.push({
+            id,
+            timestamp: ts,
+            zone: zone.name,
+            zoneId: zone.id,
+            type,
+            severity,
+            details
+        });
+    }
+    // Sort by timestamp desc initially
+    alerts.sort((a, b) => b.timestamp - a.timestamp);
+    return alerts;
+}
+
+let ALL_ALERTS = generateMockAlerts(42);
+
+// Heatmap mock data: [lat, lng, intensity]
+const venueCenter = [37.7749, -122.4194]; // Example center (SF)
+const zonePolygons = {
+    'zone-1': {
+        name: 'Main Stage',
+        coords: [
+            [37.7758, -122.4208],
+            [37.7758, -122.4195],
+            [37.7751, -122.4195],
+            [37.7751, -122.4208]
+        ]
+    },
+    'zone-2': {
+        name: 'North Gate',
+        coords: [
+            [37.7765, -122.4190],
+            [37.7765, -122.4178],
+            [37.7759, -122.4178],
+            [37.7759, -122.4190]
+        ]
+    },
+    'zone-3': {
+        name: 'Food Court',
+        coords: [
+            [37.7747, -122.4206],
+            [37.7747, -122.4196],
+            [37.7740, -122.4196],
+            [37.7740, -122.4206]
+        ]
+    },
+    'zone-4': {
+        name: 'East Exit',
+        coords: [
+            [37.7749, -122.4175],
+            [37.7749, -122.4165],
+            [37.7743, -122.4165],
+            [37.7743, -122.4175]
+        ]
+    },
+    'zone-5': {
+        name: 'Parking Lot',
+        coords: [
+            [37.7738, -122.4213],
+            [37.7738, -122.4199],
+            [37.7731, -122.4199],
+            [37.7731, -122.4213]
+        ]
+    }
+};
+
+function generateHeatPoints(count = 120) {
+    const points = [];
+    const now = Date.now();
+    for (let i = 0; i < count; i++) {
+        // Randomly distribute around center
+        const latOffset = (Math.random() - 0.5) * 0.006; // ~ few hundred meters
+        const lngOffset = (Math.random() - 0.5) * 0.006;
+        const intensity = Math.random();
+        const ts = new Date(now - Math.floor(Math.random() * 48 * 60) * 60 * 1000); // within 48h
+        // Assign to a random zone to tag points with zone context
+        const z = randomFrom(availableZones);
+        points.push({
+            lat: venueCenter[0] + latOffset,
+            lng: venueCenter[1] + lngOffset,
+            intensity,
+            timestamp: ts,
+            zoneId: z.id
+        });
+    }
+    return points;
+}
+
+let HEAT_POINTS = generateHeatPoints(200);
+
+// UI State ----------------------------------------------------------------
+const state = {
+    filters: {
+        startDate: null,
+        endDate: null,
+        zones: [], // zone ids
+        severities: ['High', 'Medium', 'Low']
+    },
+    table: {
+        page: 1,
+        pageSize: 10,
+        sortBy: 'timestamp',
+        sortDir: 'desc',
+        data: []
+    },
+    map: {
+        map: null,
+        heatLayer: null,
+        zoneLayers: {},
+    },
+    dirty: false
+};
+
+// Elements ----------------------------------------------------------------
+const el = {
+    startDate: document.getElementById('startDate'),
+    endDate: document.getElementById('endDate'),
+    applyBtn: document.getElementById('applyFiltersBtn'),
+    resetBtn: document.getElementById('resetFiltersBtn'),
+    alertsSkeleton: document.getElementById('alertsSkeleton'),
+    alertsLoading: document.getElementById('alertsLoading'),
+    alertsTableWrap: document.getElementById('alertsTableWrap'),
+    alertsTbody: document.getElementById('alertsTbody'),
+    alertsCountBadge: document.getElementById('alertsCountBadge'),
+    alertsPagination: document.getElementById('alertsPagination'),
+    paginationInfo: document.getElementById('paginationInfo'),
+    exportCsvBtn: document.getElementById('exportCsvBtn'),
+    mapContainer: document.getElementById('heatmapMap'),
+    mapLoading: document.getElementById('mapLoading'),
+    heatmapStatus: document.getElementById('heatmapStatus'),
+};
+
+// Initialize Controls ------------------------------------------------------
+let fpStart, fpEnd, choicesZones, choicesSeverity;
+document.addEventListener('DOMContentLoaded', () => {
+    // Flatpickr with time enable
+    const now = new Date();
+    const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+    fpStart = flatpickr(el.startDate, {
+        enableTime: true,
+        dateFormat: 'Y-m-d H:i',
+        defaultDate: oneDayAgo,
+        onChange: (selectedDates) => {
+            state.filters.startDate = selectedDates[0] || null;
+            fpEnd.set('minDate', selectedDates[0] || null);
+            markDirty();
+        }
+    });
+    fpEnd = flatpickr(el.endDate, {
+        enableTime: true,
+        dateFormat: 'Y-m-d H:i',
+        defaultDate: now,
+        onChange: (selectedDates) => {
+            state.filters.endDate = selectedDates[0] || null;
+            fpStart.set('maxDate', selectedDates[0] || null);
+            markDirty();
+        }
+    });
+    state.filters.startDate = oneDayAgo;
+    state.filters.endDate = now;
+
+    // Choices.js for multi-selects
+    // Populate zones with 'All Zones'
+    const zoneSelect = document.getElementById('zoneSelect');
+    const allOpt = new Option('All Zones', 'all', true, true);
+    zoneSelect.add(allOpt);
+    availableZones.forEach(z => zoneSelect.add(new Option(z.name, z.id)));
+
+    choicesZones = new Choices(zoneSelect, {
+        removeItemButton: true,
+        placeholder: true,
+        placeholderValue: 'Select zones...',
+        shouldSort: false
+    });
+
+    const sevSelect = document.getElementById('severitySelect');
+    choicesSeverity = new Choices(sevSelect, {
+        removeItemButton: true,
+        shouldSort: false
+    });
+
+    // Handle All Zones behavior
+    zoneSelect.addEventListener('change', () => {
+        const values = choicesZones.getValue(true); // array
+        if (values.includes('all')) {
+            // Select all actual zones and remove 'all'
+            choicesZones.removeActiveItems();
+            choicesZones.setValue(availableZones.map(z => z.id));
+        }
+        state.filters.zones = choicesZones.getValue(true);
+        markDirty();
+    });
+
+    sevSelect.addEventListener('change', () => {
+        state.filters.severities = choicesSeverity.getValue(true);
+        markDirty();
+    });
+
+    // Apply & Reset
+    el.applyBtn.addEventListener('click', onApplyFilters);
+    el.resetBtn.addEventListener('click', onResetFilters);
+
+    // Table header sort
+    document.querySelectorAll('#alertsTable thead th[role="button"]').forEach(th => {
+        th.addEventListener('click', () => {
+            const key = th.getAttribute('data-sort');
+            if (state.table.sortBy === key) {
+                state.table.sortDir = state.table.sortDir === 'asc' ? 'desc' : 'asc';
+            } else {
+                state.table.sortBy = key;
+                state.table.sortDir = 'asc';
+            }
+            state.table.page = 1;
+            renderTable();
+            updateSortIcons();
+        });
+    });
+
+    // Export CSV
+    el.exportCsvBtn.addEventListener('click', exportCSV);
+
+    // Initialize map
+    initMap();
+
+    // Initial load (auto-apply defaults)
+    onApplyFilters();
+});
+
+function markDirty() {
+    state.dirty = true;
+    el.applyBtn.disabled = false;
+}
+
+// Filtering + Loading ------------------------------------------------------
+function onApplyFilters() {
+    // Validate dates
+    if (state.filters.startDate && state.filters.endDate && state.filters.endDate < state.filters.startDate) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Invalid date range',
+            text: 'End date cannot be before start date.'
+        });
+        return;
+    }
+
+    // Show loading states
+    el.alertsSkeleton.classList.remove('d-none');
+    el.alertsTableWrap.classList.add('d-none');
+    el.alertsLoading.classList.remove('d-none');
+    el.mapLoading.classList.remove('d-none');
+    el.exportCsvBtn.disabled = true;
+
+    // Simulate API delay
+    setTimeout(() => {
+        applyFiltersToData();
+        renderTable();
+        updateSortIcons();
+        updatePagination();
+        el.alertsSkeleton.classList.add('d-none');
+        el.alertsTableWrap.classList.remove('d-none');
+        el.alertsLoading.classList.add('d-none');
+        el.mapLoading.classList.add('d-none');
+        el.exportCsvBtn.disabled = state.table.data.length === 0;
+        state.dirty = false;
+        el.applyBtn.disabled = true;
+
+        // Map refresh
+        updateHeatmap();
+        el.heatmapStatus.textContent = `Showing density for ${formatDateRange(state.filters.startDate, state.filters.endDate)} across ${state.filters.zones.length ? state.filters.zones.length : 'all'} zone(s).`;
+
+        Swal.fire({
+            toast: true,
+            position: 'top-end',
+            showConfirmButton: false,
+            timer: 1500,
+            icon: 'success',
+            title: 'Filters applied'
+        });
+    }, 700);
+}
+
+function onResetFilters() {
+    const now = new Date();
+    const oneDayAgo = new Date(now.getTime() - 24 * 60 * 60 * 1000);
+    fpStart.setDate(oneDayAgo, true);
+    fpEnd.setDate(now, true);
+    choicesZones.removeActiveItems();
+    choicesZones.setValue(['all']); // will auto-select all -> handler converts
+    choicesSeverity.removeActiveItems();
+    choicesSeverity.setValue(['High', 'Medium', 'Low']);
+    state.filters.severities = ['High', 'Medium', 'Low'];
+    state.table.page = 1;
+    markDirty();
+}
+
+function applyFiltersToData() {
+    const {
+        startDate,
+        endDate,
+        zones,
+        severities
+    } = state.filters;
+    let data = ALL_ALERTS.slice();
+    if (startDate) data = data.filter(a => a.timestamp >= startDate);
+    if (endDate) data = data.filter(a => a.timestamp <= endDate);
+    if (zones.length > 0) data = data.filter(a => zones.includes(a.zoneId));
+    if (severities.length > 0) data = data.filter(a => severities.includes(a.severity));
+    state.table.data = data;
+    el.alertsCountBadge.textContent = `${data.length} alerts`;
+    el.alertsCountBadge.className = 'badge-soft info';
+}
+
+// Table Rendering & Pagination --------------------------------------------
+function renderTable() {
+    const {
+        sortBy,
+        sortDir,
+        page,
+        pageSize,
+        data
+    } = state.table;
+    // Sorting
+    const sorted = data.slice().sort((a, b) => {
+        let av = a[sortBy],
+            bv = b[sortBy];
+        if (sortBy === 'timestamp') {
+            av = a.timestamp.getTime();
+            bv = b.timestamp.getTime();
+        }
+        if (typeof av === 'string' && typeof bv === 'string') {
+            av = av.toLowerCase();
+            bv = bv.toLowerCase();
+        }
+        if (av < bv) return sortDir === 'asc' ? -1 : 1;
+        if (av > bv) return sortDir === 'asc' ? 1 : -1;
+        return 0;
+    });
+    const startIdx = (page - 1) * pageSize;
+    const rows = sorted.slice(startIdx, startIdx + pageSize);
+
+    const tbody = el.alertsTbody;
+    tbody.innerHTML = '';
+    if (rows.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><div class="text-muted">No alerts match the selected filters.</div></div></td></tr>`;
+    } else {
+        rows.forEach(r => {
+            const tr = document.createElement('tr');
+            tr.innerHTML = `
+            <td>${r.timestamp.toLocaleString()}</td>
+            <td>${r.zone}</td>
+            <td>${r.type}</td>
+            <td>
+              <span class="badge-soft ${r.severity === 'High' ? 'error' : r.severity === 'Medium' ? 'warning' : 'success'}">${r.severity}</span>
+            </td>
+            <td>${r.details}</td>
+            <td class="text-end">
+              <a class="btn btn-sm btn-light" href="./alert_details.html?id=${encodeURIComponent(r.id)}" title="View details"><i class="fa-solid fa-up-right-from-square"></i></a>
+            </td>
+          `;
+            tr.style.cursor = 'pointer';
+            tr.addEventListener('click', (e) => {
+                // Avoid triggering when clicking the button
+                if (!(e.target.closest('a'))) {
+                    window.location.href = `./alert_details.html?id=${encodeURIComponent(r.id)}`;
+                }
+            });
+            tbody.appendChild(tr);
+        });
+    }
+
+    // Pagination info
+    const total = data.length;
+    const from = total === 0 ? 0 : startIdx + 1;
+    const to = Math.min(startIdx + rows.length, total);
+    el.paginationInfo.textContent = `Showing ${from} to ${to} of ${total} entries`;
+
+    // Export button state
+    el.exportCsvBtn.disabled = total === 0;
+}
+
+function updatePagination() {
+    const total = state.table.data.length;
+    const pages = Math.max(1, Math.ceil(total / state.table.pageSize));
+    const current = Math.max(1, Math.min(state.table.page, pages));
+    state.table.page = current;
+    const ul = el.alertsPagination;
+    ul.innerHTML = '';
+
+    function addItem(label, disabled, active, onClick) {
+        const li = document.createElement('li');
+        li.className = `page-item${disabled ? ' disabled' : ''}${active ? ' active' : ''}`;
+        const a = document.createElement('a');
+        a.className = 'page-link';
+        a.href = '#';
+        a.textContent = label;
+        a.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (!disabled && !active) onClick();
+        });
+        li.appendChild(a);
+        ul.appendChild(li);
+    }
+
+    addItem('Prev', current === 1, false, () => {
+        state.table.page--;
+        renderTable();
+        updatePagination();
+    });
+    for (let p = 1; p <= pages; p++) {
+        addItem(String(p), false, p === current, () => {
+            state.table.page = p;
+            renderTable();
+            updatePagination();
+        });
+    }
+    addItem('Next', current === pages, false, () => {
+        state.table.page++;
+        renderTable();
+        updatePagination();
+    });
+}
+
+function updateSortIcons() {
+    document.querySelectorAll('#alertsTable thead th[role="button"]').forEach(th => {
+        const icon = th.querySelector('i');
+        const key = th.getAttribute('data-sort');
+        icon.className = 'fa-solid fa-sort ms-1 text-muted';
+        if (key === state.table.sortBy) {
+            icon.className = `fa-solid fa-sort-${state.table.sortDir === 'asc' ? 'up' : 'down'} ms-1`;
+        }
+    });
+}
+
+// CSV Export ---------------------------------------------------------------
+function exportCSV() {
+    const rows = state.table.data;
+    if (!rows.length) return;
+    const {
+        startDate,
+        endDate
+    } = state.filters;
+    const filename = `CrowdShield_AlertLog_${formatDateFile(startDate)}_to_${formatDateFile(endDate)}.csv`;
+    const headers = ['ID', 'Timestamp', 'Zone', 'Type', 'Severity', 'Details'];
+    const lines = [headers.join(',')];
+    rows.forEach(r => {
+        const cols = [r.id, sanitizeCsv(r.timestamp.toISOString()), sanitizeCsv(r.zone), sanitizeCsv(r.type), r.severity, sanitizeCsv(r.details)];
+        lines.push(cols.join(','));
+    });
+    const blob = new Blob(["\uFEFF" + lines.join('\n')], {
+        type: 'text/csv;charset=utf-8;'
+    });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = filename;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    Swal.fire({
+        icon: 'success',
+        title: 'Export started',
+        text: 'Your CSV is downloading.'
+    });
+}
+
+function sanitizeCsv(val) {
+    if (val == null) return '';
+    const s = String(val).replaceAll('"', '""');
+    return `"${s}"`;
+}
+
+function formatDateFile(d) {
+    if (!d) return 'unknown';
+    const yyyy = d.getFullYear();
+    const mm = ('' + (d.getMonth() + 1)).padStart(2, '0');
+    const dd = ('' + d.getDate()).padStart(2, '0');
+    return `${yyyy}-${mm}-${dd}`;
+}
+
+function formatDateRange(s, e) {
+    const opts = {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+    };
+    return `${s.toLocaleString(undefined, opts)} to ${e.toLocaleString(undefined, opts)}`;
+}
+
+// Map & Heatmap ------------------------------------------------------------
+function initMap() {
+    const map = L.map('heatmapMap', {
+        center: venueCenter,
+        zoom: 15,
+        scrollWheelZoom: true
+    });
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        maxZoom: 19,
+        attribution: '&copy; OpenStreetMap'
+    }).addTo(map);
+    state.map.map = map;
+
+    // Zone polygons overlay
+    Object.entries(zonePolygons).forEach(([id, z]) => {
+        const layer = L.polygon(z.coords, {
+            color: '#000',
+            weight: 1,
+            fillColor: '#0d6efd',
+            fillOpacity: 0.08
+        });
+        layer.bindTooltip(z.name, {
+            direction: 'top'
+        });
+        layer.on('click', () => {
+            // Brief highlight
+            layer.setStyle({
+                fillOpacity: 0.2
+            });
+            setTimeout(() => layer.setStyle({
+                fillOpacity: 0.08
+            }), 400);
+        });
+        layer.addTo(map);
+        state.map.zoneLayers[id] = layer;
+    });
+
+    // Heat Layer
+    state.map.heatLayer = L.heatLayer([], {
+        radius: 25,
+        blur: 15,
+        maxZoom: 17,
+        gradient: {
+            0.2: '#2c7fb8',
+            0.5: '#fdae61',
+            0.8: '#f46d43',
+            1.0: '#d73027'
+        }
+    }).addTo(map);
+
+    // Position legend
+    const legend = document.querySelector('.map-legend');
+    if (legend) {
+        // position in top left of the map container
+        legend.style.left = '10px';
+        legend.style.top = '10px';
+    }
+}
+
+function updateHeatmap()() {}
+  </script>
+  <script>
+   function updateHeatmap() {
+    if (!state.map.map || !state.map.heatLayer) return;
+    const {
+        startDate,
+        endDate,
+        zones
+    } = state.filters;
+    // Filter heat points
+    const points = HEAT_POINTS.filter(p => (!startDate || p.timestamp >= startDate) && (!endDate || p.timestamp <= endDate) && (zones.length === 0 || zones.includes(p.zoneId)));
+    // Transform to [lat, lng, intensity]
+    const data = points.map(p => [p.lat, p.lng, Math.max(0.2, Math.min(1, p.intensity))]);
+    state.map.heatLayer.setLatLngs(data);
+    // If we have points, fit bounds
+    if (points.length) {
+        const latlngs = points.map(p => [p.lat, p.lng]);
+        const bounds = L.latLngBounds(latlngs);
+        state.map.map.fitBounds(bounds.pad(0.2));
+    }
+}
+  </script>
+ </body>
+</html>

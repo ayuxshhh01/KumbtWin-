@@ -1,0 +1,50 @@
+:root {
+    --font-sans: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol"
+    }
+/* Alert Details Page specific */
+#incidentMap {
+    width: 100%;
+    height: 420px
+    }
+@media (min-width: 992px) {
+    #incidentMap {
+        height: 520px
+        }
+    }
+/* Align badges and header content neatly */
+#severityBadge, #statusBadge {
+    font-weight: 600
+    }
+/* Emphasize metrics when over threshold (leverages existing .alarm animation) */
+.metric-card.alarm {
+    border-color: var(--color-warning)
+    }
+/* Video card minor polish */
+.video-card video, .video-card img {
+    border-radius: var(--radius-1)
+    }
+/* Incident log table tweaks */
+#logTable thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1
+    }
+#logTable tbody tr:hover {
+    background: rgba(0, 0, 0, 0.03)
+    }
+/* Toast placement fine-tune on small devices */
+@media (max-width: 575.98px) {
+    .toast {
+        width: 96vw
+        }
+    }
+/* Buttons sizing harmony */
+#btnAcknowledge, #btnResolve, #btnCenter2 {
+    min-width: 140px
+    }
+/* Ensure main content area uses available width next to sidebar */
+@media (min-width: 992px) {
+    #csSidebar + .col {
+        flex: 1 1 auto
+        }
+    }

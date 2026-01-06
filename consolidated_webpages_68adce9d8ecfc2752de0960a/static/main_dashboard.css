@@ -1,0 +1,85 @@
+/* Main Dashboard (page-specific) */
+/* Use Poppins across the page */
+body {
+    font-family: "Poppins", var(--font-sans)
+    }
+/* Map container sized for viewport */
+.map-container {
+    height: 58vh;
+    min-height: 360px;
+    position: relative
+    }
+@media (min-height: 900px) {
+    .map-container {
+        height: 64vh
+        }
+    }
+/* Alerts panel sticky under header */
+.alerts-panel {
+    top: 84px;
+    max-height: calc(100vh - 110px);
+    overflow: hidden
+    }
+.alerts-panel .card-body {
+    overflow: auto;
+    max-height: calc(100vh - 210px)
+    }
+/* Alert list items with severity accent */
+.alert-card {
+    border-left: 4px solid var(--border-color);
+    cursor: pointer;
+    transition: background-color 0.15s ease, opacity 0.2s ease
+    }
+.alert-card:hover {
+    background: var(--neutral-soft)
+    }
+.alert-card.ack {
+    opacity: 0.7
+    }
+.alert-card[data-severity="High"] {
+    border-left-color: var(--color-error)
+    }
+.alert-card[data-severity="Medium"] {
+    border-left-color: var(--color-warning)
+    }
+.alert-card[data-severity="Low"] {
+    border-left-color: var(--color-success)
+    }
+.alert-card .severity-badge {
+    font-weight: 700
+    }
+.alert-card[data-severity="High"] .severity-badge {
+    background: var(--error-soft);
+    color: #7a0f12
+    }
+.alert-card[data-severity="Medium"] .severity-badge {
+    background: var(--warning-soft);
+    color: #5a3f00
+    }
+.alert-card[data-severity="Low"] .severity-badge {
+    background: var(--success-soft);
+    color: #0d5c3d
+    }
+/* View switcher alignment in header already themed; ensure pointer */
+.view-switcher .option {
+    user-select: none
+    }
+/* Chart container height */
+#crowdTrendChart {
+    height: 220px !important
+    }
+/* Breadcrumb compactness on mobile */
+@media (max-width: 575.98px) {
+    .breadcrumb {
+        gap: 4px
+        }
+    }
+/* Improve card header title spacing */
+.card-header .title {
+    font-weight: 600
+    }
+/* Fix footer stickiness spacing with main content */
+footer {
+    position: relative;
+    z-index: var(--z-bottom-bar)
+    }
