@@ -1,4 +1,4 @@
-# 👁️ GuardianEye - Smart Event Safety System
+# 👁️ KumbtWin - Smart Event Safety System
 
 > **AI-Powered Real-Time Crowd Monitoring & Alert System for Large-Scale Events.**
 
